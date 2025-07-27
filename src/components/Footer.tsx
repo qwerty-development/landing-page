@@ -1,152 +1,174 @@
-import React from 'react';
-import { Mail, Phone, MapPin } from 'lucide-react';
+import React, { useState } from 'react';
+import { Mail, ArrowUpRight, ChevronRight } from 'lucide-react';
 
 const Footer = () => {
+  const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     element?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setEmail('');
+    }, 2000);
+  };
+
+  const footerLinks = [
+    {
+      title: 'Product',
+      links: [
+        { name: 'Features', action: () => scrollToSection('features') },
+        { name: 'How It Works', action: () => scrollToSection('process') },
+        { name: 'Pricing', href: '#' },
+        { name: 'For Restaurants', href: '#' }
+      ]
+    },
+    {
+      title: 'Company',
+      links: [
+        { name: 'About', href: '#' },
+        { name: 'Careers', href: '#', badge: '3 open' },
+        { name: 'Press', href: '#' },
+        { name: 'Contact', href: '#' }
+      ]
+    },
+    {
+      title: 'Resources',
+      links: [
+        { name: 'Blog', href: '#' },
+        { name: 'Newsletter', href: '#' },
+        { name: 'Help Center', href: '#' },
+        { name: 'Community', href: '#' }
+      ]
+    },
+    {
+      title: 'Legal',
+      links: [
+        { name: 'Privacy', href: '#' },
+        { name: 'Terms', href: '#' },
+        { name: 'Cookies', href: '#' },
+        { name: 'Licenses', href: '#' }
+      ]
+    }
+  ];
+
+  const socialLinks = [
+    { name: 'Instagram', href: '#' },
+    { name: 'Twitter', href: '#' },
+    { name: 'LinkedIn', href: '#' },
+    { name: 'Facebook', href: '#' }
+  ];
+
   return (
-    <footer className="bg-white border-t border-gray-100">
-      <div className="container mx-auto px-4 py-20">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-          {/* Brand */}
-          <div className="lg:col-span-1">
+    <footer className="bg-black text-white border-t border-white/10">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-24">
+        {/* Top Section */}
+        <div className="grid lg:grid-cols-2 gap-16 mb-20">
+          {/* Brand Section */}
+          <div>
             <div className="mb-8">
-              <span className="text-2xl font-semibold text-gray-900 tracking-tight">
-                Booklet
+              <span className="text-3xl font-thin tracking-wider">
+                BOOKLET
               </span>
             </div>
-            <p className="text-gray-500 mb-8 leading-relaxed font-light">
-              Lebanon's premier restaurant reservation app. Discover, book, and enjoy the best dining experiences with zero hassle
+            <p className="text-gray-400 text-lg leading-relaxed max-w-md mb-12">
+              Transform your dining experience with Lebanon's premier restaurant reservation platform. 
+              Discover, book, and enjoy.
             </p>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-lg font-medium text-gray-900 mb-6">Quick Links</h3>
-            <ul className="space-y-3">
-              <li>
-                <button
-                  onClick={() => scrollToSection('features')}
-                  className="text-gray-500 hover:text-gray-900 transition-colors duration-300 font-light"
+            
+            {/* Social Links */}
+            <div className="flex gap-6">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.name}
+                  href={social.href}
+                  className="group flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300"
                 >
-                  Features
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => scrollToSection('how-it-works')}
-                  className="text-gray-500 hover:text-gray-900 transition-colors duration-300 font-light"
-                >
-                  How It Works
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => scrollToSection('testimonials')}
-                  className="text-gray-500 hover:text-gray-900 transition-colors duration-300 font-light"
-                >
-                  Reviews
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => scrollToSection('download')}
-                  className="text-gray-500 hover:text-gray-900 transition-colors duration-300 font-light"
-                >
-                  Download App
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          {/* Support */}
-          <div>
-            <h3 className="text-lg font-medium text-gray-900 mb-6">Support</h3>
-            <ul className="space-y-3">
-              <li>
-                <a href="#" className="text-gray-500 hover:text-gray-900 transition-colors duration-300 font-light">
-                  Help Center
+                  <span className="text-sm">{social.name}</span>
+                  <ArrowUpRight className="w-3 h-3 opacity-0 -translate-x-2 translate-y-2 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-300" />
                 </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-500 hover:text-gray-900 transition-colors duration-300 font-light">
-                  Contact Support
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-500 hover:text-gray-900 transition-colors duration-300 font-light">
-                  Privacy Policy
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-500 hover:text-gray-900 transition-colors duration-300 font-light">
-                  Terms of Service
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Contact */}
-          <div>
-            <h3 className="text-lg font-medium text-gray-900 mb-6">Contact</h3>
-            <div className="space-y-3">
-              <div className="flex items-center gap-3 text-gray-500 font-light">
-                <Mail className="w-5 h-5" />
-                <span>support@booklet.com</span>
-              </div>
-              <div className="flex items-center gap-3 text-gray-500 font-light">
-                <Phone className="w-5 h-5" />
-                <span>+961 1 234 567</span>
-              </div>
-              <div className="flex items-start gap-3 text-gray-500 font-light">
-                <MapPin className="w-5 h-5 mt-0.5" />
-                <span>Beirut, Lebanon<br />Available nationwide</span>
-              </div>
+              ))}
             </div>
+          </div>
+
+          {/* Newsletter Section */}
+          <div className="lg:text-right">
+            <h3 className="text-2xl font-light mb-4">Stay Updated</h3>
+            <p className="text-gray-400 mb-8">
+              Get the latest updates on new features and restaurant partnerships.
+            </p>
+            <form onSubmit={handleSubmit} className="relative max-w-md ml-auto">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-full text-white placeholder-gray-500 focus:outline-none focus:border-white/30 transition-colors duration-300"
+                required
+              />
+              <button
+                type="submit"
+                className={`absolute right-2 top-1/2 -translate-y-1/2 w-12 h-12 bg-white text-black rounded-full flex items-center justify-center hover:scale-110 transition-all duration-300 ${
+                  isSubmitting ? 'scale-0' : 'scale-100'
+                }`}
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+              {isSubmitting && (
+                <div className="absolute right-2 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full border-2 border-white/30 border-t-white animate-spin"></div>
+              )}
+            </form>
           </div>
         </div>
 
-        {/* App Stats */}
-        <div className="border-t border-gray-100 pt-12 mb-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="text-2xl font-light text-gray-900 mb-1">50,000+</div>
-              <div className="text-gray-500 text-sm font-light">Happy Users</div>
+        {/* Links Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-20 pt-20 border-t border-white/10">
+          {footerLinks.map((section) => (
+            <div key={section.title}>
+              <h4 className="text-sm font-light tracking-wider text-gray-400 mb-6">{section.title.toUpperCase()}</h4>
+              <ul className="space-y-4">
+                {section.links.map((link) => (
+                  <li key={link.name}>
+               
+                      <a
+                        href={link.href}
+                        className="group flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300"
+                      >
+                        {link.name}
+                        
+                      </a>
+                    
+                  </li>
+                ))}
+              </ul>
             </div>
-            <div>
-              <div className="text-2xl font-light text-gray-900 mb-1">500+</div>
-              <div className="text-gray-500 text-sm font-light">Partner Restaurants</div>
-            </div>
-            <div>
-              <div className="text-2xl font-light text-gray-900 mb-1">4.8★</div>
-              <div className="text-gray-500 text-sm font-light">App Store Rating</div>
-            </div>
-            <div>
-              <div className="text-2xl font-light text-gray-900 mb-1">95%</div>
-              <div className="text-gray-500 text-sm font-light">Success Rate</div>
-            </div>
-          </div>
+          ))}
         </div>
 
-        {/* Bottom */}
-        <div className="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="text-gray-500 text-sm font-light">
-            © 2025 Booklet. All rights reserved.
+        {/* Bottom Section */}
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6 pt-12 border-t border-white/10">
+          <div className="flex flex-col md:flex-row items-center gap-6 text-sm text-gray-400">
+            <span>© 2025 Booklet. All rights reserved.</span>
+            <span className="hidden md:block">·</span>
+            <span>Crafted with love in Lebanon</span>
           </div>
-          <div className="flex items-center gap-6 text-sm text-gray-500 font-light">
-            <a href="#" className="hover:text-gray-900 transition-colors duration-300">
-              Privacy Policy
-            </a>
-            <a href="#" className="hover:text-gray-900 transition-colors duration-300">
-              Terms of Service
-            </a>
-            <a href="#" className="hover:text-gray-900 transition-colors duration-300">
-              Cookie Policy
-            </a>
-          </div>
+          
+          {/* Back to top */}
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="group flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300"
+          >
+            <span className="text-sm">Back to top</span>
+            <div className="w-8 h-8 rounded-full border border-white/20 group-hover:border-white/40 flex items-center justify-center transition-colors duration-300">
+              <ChevronRight className="w-4 h-4 -rotate-90 group-hover:-translate-y-0.5 transition-transform duration-300" />
+            </div>
+          </button>
         </div>
       </div>
     </footer>
