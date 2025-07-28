@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { ChevronDown, Play } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { ChevronDown, Play, Sparkles } from 'lucide-react';
 
 const Hero = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const [textGlitch, setTextGlitch] = useState(false);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
   
   const backgroundImages = [
     'https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=1920&q=80',
@@ -21,13 +24,96 @@ const Hero = () => {
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 20;
-      const y = (e.clientY / window.innerHeight - 0.5) * 20;
+      const x = (e.clientX / window.innerWidth - 0.5) * 40;
+      const y = (e.clientY / window.innerHeight - 0.5) * 40;
       setMousePosition({ x, y });
     };
     
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  // Glitch effect
+  useEffect(() => {
+    const glitchInterval = setInterval(() => {
+      setTextGlitch(true);
+      setTimeout(() => setTextGlitch(false), 200);
+    }, 5000);
+    return () => clearInterval(glitchInterval);
+  }, []);
+
+  // Particle effect canvas
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const particles: Array<{
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      size: number;
+      life: number;
+    }> = [];
+
+    const createParticle = (x: number, y: number) => {
+      particles.push({
+        x,
+        y,
+        vx: (Math.random() - 0.5) * 2,
+        vy: (Math.random() - 0.5) * 2,
+        size: Math.random() * 3,
+        life: 1
+      });
+    };
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      particles.forEach((particle, index) => {
+        particle.x += particle.vx;
+        particle.y += particle.vy;
+        particle.life -= 0.01;
+        particle.size *= 0.99;
+
+        ctx.save();
+        ctx.globalAlpha = particle.life;
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        if (particle.life <= 0) {
+          particles.splice(index, 1);
+        }
+      });
+
+      requestAnimationFrame(animate);
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      for (let i = 0; i < 3; i++) {
+        createParticle(x + Math.random() * 10 - 5, y + Math.random() * 10 - 5);
+      }
+    };
+
+    canvas.addEventListener('mousemove', handleMouseMove);
+    animate();
+
+    return () => {
+      canvas.removeEventListener('mousemove', handleMouseMove);
+    };
   }, []);
 
   const scrollToDownload = () => {
@@ -36,106 +122,270 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
-      {/* Animated Background */}
+    <section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
+      {/* Particle Canvas */}
+      <canvas 
+        ref={canvasRef}
+        className="absolute inset-0 pointer-events-none z-30"
+      />
+
+      {/* Animated Background Layers */}
       <div className="absolute inset-0">
+        {/* Base Images */}
         {backgroundImages.map((img, index) => (
           <div
             key={index}
-            className={`absolute inset-0 transition-all duration-3000 ${
-              index === currentImage ? 'opacity-40 scale-105' : 'opacity-0 scale-110'
+            className={`absolute inset-0 transition-all duration-4000 ${
+              index === currentImage ? 'opacity-30 scale-100' : 'opacity-0 scale-110'
             }`}
             style={{
-              transform: `translate(${mousePosition.x}px, ${mousePosition.y}px) scale(1.1)`
+              transform: `translate(${mousePosition.x * 0.5}px, ${mousePosition.y * 0.5}px) scale(1.1)`
             }}
           >
             <img
               src={img}
               alt=""
-              className="w-full h-full object-cover filter grayscale"
+              className="w-full h-full object-cover filter grayscale contrast-125"
             />
           </div>
         ))}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80"></div>
+        
+        {/* Gradient Overlays */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-70"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black opacity-50"></div>
+        
+        {/* Animated Mesh Gradient */}
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/10 via-transparent to-white/5 animate-mesh-1"></div>
+          <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-bl from-white/10 via-transparent to-white/5 animate-mesh-2"></div>
+        </div>
       </div>
 
-      {/* Animated particles */}
-      <div className="absolute inset-0">
-        {[...Array(50)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-white/20 rounded-full animate-float"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 10}s`,
-              animationDuration: `${10 + Math.random() * 20}s`
-            }}
-          />
-        ))}
+      {/* Floating Orbs */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-20 left-20 w-96 h-96 bg-white/5 rounded-full blur-3xl animate-float-1"></div>
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-white/3 rounded-full blur-3xl animate-float-2"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-white/2 rounded-full blur-3xl animate-pulse-slow"></div>
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-center">
-        <div className="max-w-5xl mx-auto">
+      <div className="relative z-20 max-w-7xl mx-auto px-6 lg:px-8 text-center">
+        <div className="max-w-6xl mx-auto">
           {/* Animated Tag */}
-          <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-xl mb-12 animate-slide-down">
-            <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
-            <span className="text-sm text-gray-300 tracking-wider">INTRODUCING BOOKLET</span>
+          <div className="inline-flex items-center gap-3 px-8 py-4 mt-20  rounded-full border border-white/10 bg-white/5 backdrop-blur-2xl mb-10 animate-slide-down hover:bg-white/10 transition-all duration-500 cursor-pointer group">
+            <Sparkles className="w-5 h-5 animate-spin-slow" />
+            <span className="text-sm text-gray-300 tracking-[0.3em] font-light">EXPERIENCE THE FUTURE</span>
+            <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
           </div>
 
-          {/* Main Heading */}
-          <h1 className="text-6xl md:text-8xl lg:text-9xl font-thin text-white mb-8 leading-none tracking-tight">
-            <span className="block animate-slide-up opacity-0" style={{ animationDelay: '200ms', animationFillMode: 'forwards' }}>
-              Dining
+          {/* Main Heading with Glitch Effect */}
+          <h1 className="relative text-7xl md:text-9xl lg:text-[12rem] font-thin text-white mb-2 leading-none tracking-tighter">
+            <span className={`block animate-slide-up opacity-0 ${textGlitch ? 'glitch' : ''}`} 
+                  style={{ animationDelay: '200ms', animationFillMode: 'forwards' }}>
+              <span className="inline-block hover:scale-110 transition-transform duration-500 cursor-default"
+                    style={{ transform: `translateZ(${mousePosition.x * 0.1}px)` }}>
+                Dining
+              </span>
             </span>
-            <span className="block font-light italic text-gray-300 animate-slide-up opacity-0" style={{ animationDelay: '400ms', animationFillMode: 'forwards' }}>
-              Perfected
+            <span className={`block font-extralight italic text-neutral-400 bg-clip-text bg-gradient-to-r from-white via-gray-400 to-white animate-gradient-x animate-slide-up opacity-0 ${textGlitch ? 'glitch' : ''}`} 
+                  style={{ animationDelay: '400ms', animationFillMode: 'forwards' }}>
+              <span className="inline-block hover:scale-110 transition-transform duration-500 cursor-default"
+                    style={{ transform: `translateZ(${-mousePosition.x * 0.1}px)` }}>
+                Perfected
+              </span>
             </span>
-          </h1>
+          </h1>3
 
-          {/* Subtitle */}
-          <p className="text-xl md:text-2xl text-gray-400 mb-16 leading-relaxed max-w-3xl mx-auto font-light animate-fade-in opacity-0" 
-             style={{ animationDelay: '600ms', animationFillMode: 'forwards' }}>
-            The future of restaurant reservations. Seamless bookings, curated experiences, 
-            and intelligent recommendations—all in one elegant app.
+          {/* Subtitle with Typewriter Effect */}
+          <p className="text-xl md:text-2xl lg:text-3xl text-gray-400 mb-16 leading-relaxed max-w-4xl mx-auto font-extralight animate-fade-in opacity-0 tracking-wide" 
+             style={{ animationDelay: '800ms', animationFillMode: 'forwards' }}>
+            The future of restaurant reservations. Seamless bookings, 
+            <span className="text-white"> curated experiences</span>, 
+            and intelligent recommendations—all in one 
+            <span className="text-white"> elegant app</span>.
           </p>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center animate-slide-up opacity-0"
-               style={{ animationDelay: '800ms', animationFillMode: 'forwards' }}>
+          {/* CTA Buttons with Liquid Effect */}
+          <div className="flex flex-col sm:flex-row gap-8 justify-center items-center animate-slide-up opacity-0"
+               style={{ animationDelay: '1000ms', animationFillMode: 'forwards' }}>
             <button
               onClick={scrollToDownload}
-              className="group relative px-10 py-5 bg-white text-black rounded-full font-light text-lg overflow-hidden hover:scale-105 transition-all duration-700"
+              className="group relative px-12 py-6 overflow-hidden rounded-full font-light text-lg"
             >
-              <span className="relative z-10 flex items-center gap-3">
-                Download Now
-                <div className="w-5 h-5 rounded-full bg-black/10 group-hover:bg-black/20 transition-colors duration-500" />
-              </span>
+              <div className="absolute inset-0 bg-white transition-transform duration-700 group-hover:scale-110"></div>
               <div className="absolute inset-0 bg-gradient-to-r from-gray-100 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+              <span className="relative z-10 flex items-center gap-4 text-black">
+                Download Now
+                <div className="w-2 h-2 bg-black rounded-full group-hover:scale-150 transition-transform duration-500" />
+              </span>
+              {/* Liquid effect */}
+              <div className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-40 h-40 bg-white rounded-full blur-3xl opacity-0 group-hover:opacity-30 group-hover:-bottom-10 transition-all duration-700"></div>
             </button>
             
             <button 
               onClick={() => setIsVideoPlaying(!isVideoPlaying)}
-              className="group flex items-center gap-4 text-white/80 hover:text-white transition-all duration-500"
+              className="group flex items-center gap-5 text-white/60 hover:text-white transition-all duration-700"
             >
-              <div className="relative w-16 h-16 rounded-full border border-white/30 flex items-center justify-center group-hover:border-white/60 transition-all duration-500 group-hover:scale-110">
-                <div className="absolute inset-0 rounded-full bg-white/10 scale-0 group-hover:scale-100 transition-transform duration-700"></div>
-                <Play className="w-6 h-6 ml-1 relative z-10" />
+              <div className="relative">
+                <div className="w-20 h-20 rounded-full border border-white/20 flex items-center justify-center group-hover:border-white/60 transition-all duration-700 group-hover:scale-110">
+                  <div className="absolute inset-0 rounded-full bg-white/5 scale-0 group-hover:scale-100 transition-transform duration-700"></div>
+                  <Play className="w-8 h-8 ml-1 relative z-10" />
+                </div>
+                {/* Ripple effect */}
+                <div className="absolute inset-0 rounded-full border border-white/20 animate-ping"></div>
               </div>
-              <span className="font-light tracking-wide">Watch Film</span>
+              <span className="font-light tracking-widest text-lg">WATCH FILM</span>
             </button>
           </div>
         </div>
 
-   
+ 
       </div>
 
       <style >{`
+        @keyframes mesh-1 {
+          0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+          33% { transform: translate(30px, -30px) rotate(120deg) scale(1.1); }
+          66% { transform: translate(-20px, 20px) rotate(240deg) scale(0.9); }
+          100% { transform: translate(0, 0) rotate(360deg) scale(1); }
+        }
+
+        @keyframes mesh-2 {
+          0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+          33% { transform: translate(-30px, 30px) rotate(-120deg) scale(0.9); }
+          66% { transform: translate(20px, -20px) rotate(-240deg) scale(1.1); }
+          100% { transform: translate(0, 0) rotate(-360deg) scale(1); }
+        }
+
+        @keyframes float-1 {
+          0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.05; }
+          50% { transform: translate(100px, -100px) scale(1.2); opacity: 0.1; }
+        }
+
+        @keyframes float-2 {
+          0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.03; }
+          50% { transform: translate(-100px, 100px) scale(1.3); opacity: 0.08; }
+        }
+
+        @keyframes float-3 {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(5px); }
+        }
+
+        @keyframes gradient-x {
+          0%, 100% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+        }
+
+        @keyframes scroll-indicator {
+          0% { transform: translateY(0); opacity: 1; }
+          50% { transform: translateY(8px); opacity: 0.5; }
+          100% { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes spin-slow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse-slow {
+          0%, 100% { opacity: 0.02; transform: scale(1); }
+          50% { opacity: 0.05; transform: scale(1.1); }
+        }
+
+        .animate-mesh-1 {
+          animation: mesh-1 20s ease-in-out infinite;
+        }
+
+        .animate-mesh-2 {
+          animation: mesh-2 25s ease-in-out infinite;
+        }
+
+        .animate-float-1 {
+          animation: float-1 15s ease-in-out infinite;
+        }
+
+        .animate-float-2 {
+          animation: float-2 20s ease-in-out infinite;
+        }
+
+        .animate-float-3 {
+          animation: float-3 2s ease-in-out infinite;
+        }
+
+        .animate-gradient-x {
+          background-size: 200% 200%;
+          animation: gradient-x 3s ease infinite;
+        }
+
+        .animate-scroll-indicator {
+          animation: scroll-indicator 1.5s ease-in-out infinite;
+        }
+
+        .animate-spin-slow {
+          animation: spin-slow 10s linear infinite;
+        }
+
+        .animate-pulse-slow {
+          animation: pulse-slow 4s ease-in-out infinite;
+        }
+
+        .duration-4000 {
+          transition-duration: 4000ms;
+        }
+
+        /* Glitch Effect */
+        .glitch {
+          position: relative;
+          animation: glitch-animation 0.3s ease-in-out;
+        }
+
+        .glitch::before,
+        .glitch::after {
+          content: attr(data-text);
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+        }
+
+        .glitch::before {
+          animation: glitch-1 0.2s ease-in-out;
+          color: #ff00ff;
+          z-index: -1;
+        }
+
+        .glitch::after {
+          animation: glitch-2 0.2s ease-in-out;
+          color: #00ffff;
+          z-index: -2;
+        }
+
+        @keyframes glitch-animation {
+          0%, 100% { transform: translate(0); }
+          20% { transform: translate(-2px, 2px); }
+          40% { transform: translate(-2px, -2px); }
+          60% { transform: translate(2px, 2px); }
+          80% { transform: translate(2px, -2px); }
+        }
+
+        @keyframes glitch-1 {
+          0%, 100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); transform: translate(0); }
+          25% { clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%); transform: translate(-5px); }
+          50% { clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%); transform: translate(5px); }
+        }
+
+        @keyframes glitch-2 {
+          0%, 100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); transform: translate(0); }
+          25% { clip-path: polygon(0 0, 100% 0, 100% 60%, 0 60%); transform: translate(5px); }
+          50% { clip-path: polygon(0 40%, 100% 40%, 100% 100%, 0 100%); transform: translate(-5px); }
+        }
+
         @keyframes slide-down {
           from {
             opacity: 0;
-            transform: translateY(-20px);
+            transform: translateY(-30px);
           }
           to {
             opacity: 1;
@@ -146,7 +396,7 @@ const Hero = () => {
         @keyframes slide-up {
           from {
             opacity: 0;
-            transform: translateY(40px);
+            transform: translateY(60px);
           }
           to {
             opacity: 1;
@@ -163,21 +413,6 @@ const Hero = () => {
           }
         }
 
-        @keyframes float {
-          0%, 100% {
-            transform: translateY(0) translateX(0);
-          }
-          25% {
-            transform: translateY(-20px) translateX(10px);
-          }
-          50% {
-            transform: translateY(10px) translateX(-10px);
-          }
-          75% {
-            transform: translateY(-10px) translateX(20px);
-          }
-        }
-
         @keyframes bounce-slow {
           0%, 100% {
             transform: translateY(0);
@@ -188,27 +423,19 @@ const Hero = () => {
         }
 
         .animate-slide-down {
-          animation: slide-down 1s ease-out;
+          animation: slide-down 1.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .animate-slide-up {
-          animation: slide-up 1s ease-out;
+          animation: slide-up 1.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .animate-fade-in {
-          animation: fade-in 1s ease-out;
-        }
-
-        .animate-float {
-          animation: float linear infinite;
+          animation: fade-in 1.5s ease-out;
         }
 
         .animate-bounce-slow {
           animation: bounce-slow 2s ease-in-out infinite;
-        }
-
-        .duration-3000 {
-          transition-duration: 3000ms;
         }
       `}</style>
     </section>
