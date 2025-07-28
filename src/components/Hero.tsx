@@ -194,7 +194,7 @@ const Hero = () => {
                 Perfected
               </span>
             </span>
-          </h1>3
+          </h1>
 
           {/* Subtitle with Typewriter Effect */}
           <p className="text-xl md:text-2xl lg:text-3xl text-gray-400 mb-16 leading-relaxed max-w-4xl mx-auto font-extralight animate-fade-in opacity-0 tracking-wide" 
