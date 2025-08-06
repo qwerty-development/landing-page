@@ -179,12 +179,18 @@ const Hero = () => {
       <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left sm:text-center">
         <div className="max-w-6xl mx-auto">
           {/* Animated Tag */}
-          <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-8 py-3 sm:py-4 mt-0 sm:mt-20 rounded-full border border-white/10 bg-white/5 backdrop-blur-2xl mb-6 sm:mb-10 animate-slide-down hover:bg-white/10 transition-all duration-500 cursor-pointer group">
-            <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 animate-spin-slow" />
-            <span className="text-xs sm:text-sm text-gray-300 tracking-[0.2em] sm:tracking-[0.3em] font-light">
-              EXPERIENCE THE FUTURE
-            </span>
-            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white rounded-full animate-pulse"></div>
+          <div className="flex justify-center sm:justify-start mb-6 sm:mb-10">
+            <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-8 py-3 sm:py-4 mt-0 sm:mt-20 rounded-full border border-white/10 bg-white/5 backdrop-blur-2xl animate-slide-down hover:bg-white/10 transition-all duration-500 cursor-pointer group relative overflow-hidden">
+              {/* Mobile glow effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-white/10 via-transparent to-white/10 opacity-0 sm:group-hover:opacity-100 transition-opacity duration-700"></div>
+              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 animate-spin-slow relative z-10" />
+              <span className="text-xs sm:text-sm text-gray-300 tracking-[0.2em] sm:tracking-[0.3em] font-light relative z-10">
+                EXPERIENCE THE FUTURE
+              </span>
+              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white rounded-full animate-pulse relative z-10"></div>
+              {/* Mobile shimmer effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 sm:hidden"></div>
+            </div>
           </div>
 
           {/* Main Heading with Glitch Effect */}
