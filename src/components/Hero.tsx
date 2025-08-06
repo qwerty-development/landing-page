@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { ChevronDown, Play, Sparkles } from 'lucide-react';
+import React, { useState, useEffect, useRef } from "react";
+import { ChevronDown, Play, Sparkles } from "lucide-react";
 
 const Hero = () => {
   const [currentImage, setCurrentImage] = useState(0);
@@ -8,11 +8,11 @@ const Hero = () => {
   const [textGlitch, setTextGlitch] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
-  
+
   const backgroundImages = [
-    'https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=1920&q=80',
-    'https://images.unsplash.com/photo-1552566626-52f8b828add9?w=1920&q=80',
-    'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1920&q=80'
+    "https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=1920&q=80",
+    "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=1920&q=80",
+    "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1920&q=80",
   ];
 
   useEffect(() => {
@@ -28,9 +28,9 @@ const Hero = () => {
       const y = (e.clientY / window.innerHeight - 0.5) * 40;
       setMousePosition({ x, y });
     };
-    
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
   // Glitch effect
@@ -46,8 +46,8 @@ const Hero = () => {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    
-    const ctx = canvas.getContext('2d');
+
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     canvas.width = window.innerWidth;
@@ -69,13 +69,13 @@ const Hero = () => {
         vx: (Math.random() - 0.5) * 2,
         vy: (Math.random() - 0.5) * 2,
         size: Math.random() * 3,
-        life: 1
+        life: 1,
       });
     };
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
+
       particles.forEach((particle, index) => {
         particle.x += particle.vx;
         particle.y += particle.vy;
@@ -84,7 +84,7 @@ const Hero = () => {
 
         ctx.save();
         ctx.globalAlpha = particle.life;
-        ctx.fillStyle = '#ffffff';
+        ctx.fillStyle = "#ffffff";
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
         ctx.fill();
@@ -102,29 +102,32 @@ const Hero = () => {
       const rect = canvas.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      
+
       for (let i = 0; i < 3; i++) {
         createParticle(x + Math.random() * 10 - 5, y + Math.random() * 10 - 5);
       }
     };
 
-    canvas.addEventListener('mousemove', handleMouseMove);
+    canvas.addEventListener("mousemove", handleMouseMove);
     animate();
 
     return () => {
-      canvas.removeEventListener('mousemove', handleMouseMove);
+      canvas.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
 
   const scrollToDownload = () => {
-    const element = document.getElementById('download');
-    element?.scrollIntoView({ behavior: 'smooth' });
+    const element = document.getElementById("download");
+    element?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
-    <section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
+    <section
+      ref={heroRef}
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black"
+    >
       {/* Particle Canvas */}
-      <canvas 
+      <canvas
         ref={canvasRef}
         className="absolute inset-0 pointer-events-none z-30"
       />
@@ -136,10 +139,14 @@ const Hero = () => {
           <div
             key={index}
             className={`absolute inset-0 transition-all duration-4000 ${
-              index === currentImage ? 'opacity-30 scale-100' : 'opacity-0 scale-110'
+              index === currentImage
+                ? "opacity-30 scale-100"
+                : "opacity-0 scale-110"
             }`}
             style={{
-              transform: `translate(${mousePosition.x * 0.5}px, ${mousePosition.y * 0.5}px) scale(1.1)`
+              transform: `translate(${mousePosition.x * 0.5}px, ${
+                mousePosition.y * 0.5
+              }px) scale(1.1)`,
             }}
           >
             <img
@@ -149,11 +156,11 @@ const Hero = () => {
             />
           </div>
         ))}
-        
+
         {/* Gradient Overlays */}
         <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-70"></div>
         <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black opacity-50"></div>
-        
+
         {/* Animated Mesh Gradient */}
         <div className="absolute inset-0 opacity-30">
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/10 via-transparent to-white/5 animate-mesh-1"></div>
@@ -174,40 +181,58 @@ const Hero = () => {
           {/* Animated Tag */}
           <div className="inline-flex items-center gap-3 px-8 py-4 mt-20  rounded-full border border-white/10 bg-white/5 backdrop-blur-2xl mb-10 animate-slide-down hover:bg-white/10 transition-all duration-500 cursor-pointer group">
             <Sparkles className="w-5 h-5 animate-spin-slow" />
-            <span className="text-sm text-gray-300 tracking-[0.3em] font-light">EXPERIENCE THE FUTURE</span>
+            <span className="text-sm text-gray-300 tracking-[0.3em] font-light">
+              EXPERIENCE THE FUTURE
+            </span>
             <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
           </div>
 
           {/* Main Heading with Glitch Effect */}
           <h1 className="relative text-7xl md:text-9xl lg:text-[12rem] font-thin text-white mb-2 leading-none tracking-tighter">
-            <span className={`block animate-slide-up opacity-0 ${textGlitch ? 'glitch' : ''}`} 
-                  style={{ animationDelay: '200ms', animationFillMode: 'forwards' }}>
-              <span className="inline-block hover:scale-110 transition-transform duration-500 cursor-default"
-                    style={{ transform: `translateZ(${mousePosition.x * 0.1}px)` }}>
+            <span
+              className={`block animate-slide-up opacity-0 ${
+                textGlitch ? "glitch" : ""
+              }`}
+              style={{ animationDelay: "200ms", animationFillMode: "forwards" }}
+            >
+              <span
+                className="inline-block hover:scale-110 transition-transform duration-500"
+                style={{ transform: `translateZ(${mousePosition.x * 0.1}px)` }}
+              >
                 Dining
               </span>
             </span>
-            <span className={`block font-extralight italic text-neutral-400 bg-clip-text bg-gradient-to-r from-white via-gray-400 to-white animate-gradient-x animate-slide-up opacity-0 ${textGlitch ? 'glitch' : ''}`} 
-                  style={{ animationDelay: '400ms', animationFillMode: 'forwards' }}>
-              <span className="inline-block hover:scale-110 transition-transform duration-500 cursor-default"
-                    style={{ transform: `translateZ(${-mousePosition.x * 0.1}px)` }}>
+            <span
+              className={`block font-extralight italic text-neutral-400 bg-clip-text bg-gradient-to-r from-white via-gray-400 to-white animate-gradient-x animate-slide-up opacity-0 ${
+                textGlitch ? "glitch" : ""
+              }`}
+              style={{ animationDelay: "400ms", animationFillMode: "forwards" }}
+            >
+              <span
+                className="inline-block hover:scale-110 transition-transform duration-500"
+                style={{ transform: `translateZ(${-mousePosition.x * 0.1}px)` }}
+              >
                 Perfected
               </span>
             </span>
           </h1>
 
           {/* Subtitle with Typewriter Effect */}
-          <p className="text-xl md:text-2xl lg:text-3xl text-gray-400 mb-16 leading-relaxed max-w-4xl mx-auto font-extralight animate-fade-in opacity-0 tracking-wide" 
-             style={{ animationDelay: '800ms', animationFillMode: 'forwards' }}>
-            The future of restaurant reservations. Seamless bookings, 
-            <span className="text-white"> curated experiences</span>, 
-            and intelligent recommendations—all in one 
+          <p
+            className="text-xl md:text-2xl lg:text-3xl text-gray-400 mb-16 leading-relaxed max-w-4xl mx-auto font-extralight animate-fade-in opacity-0 tracking-wide"
+            style={{ animationDelay: "800ms", animationFillMode: "forwards" }}
+          >
+            The future of restaurant reservations. Seamless bookings,
+            <span className="text-white"> curated experiences</span>, and
+            intelligent recommendations—all in one
             <span className="text-white"> elegant app</span>.
           </p>
 
           {/* CTA Buttons with Liquid Effect */}
-          <div className="flex flex-col sm:flex-row gap-8 justify-center items-center animate-slide-up opacity-0"
-               style={{ animationDelay: '1000ms', animationFillMode: 'forwards' }}>
+          <div
+            className="flex flex-col sm:flex-row gap-8 justify-center items-center animate-slide-up opacity-0"
+            style={{ animationDelay: "1000ms", animationFillMode: "forwards" }}
+          >
             <button
               onClick={scrollToDownload}
               className="group relative px-12 py-6 overflow-hidden rounded-full font-light text-lg"
@@ -221,8 +246,8 @@ const Hero = () => {
               {/* Liquid effect */}
               <div className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-40 h-40 bg-white rounded-full blur-3xl opacity-0 group-hover:opacity-30 group-hover:-bottom-10 transition-all duration-700"></div>
             </button>
-            
-            <button 
+
+            <button
               onClick={() => setIsVideoPlaying(!isVideoPlaying)}
               className="group flex items-center gap-5 text-white/60 hover:text-white transition-all duration-700"
             >
@@ -234,15 +259,15 @@ const Hero = () => {
                 {/* Ripple effect */}
                 <div className="absolute inset-0 rounded-full border border-white/20 animate-ping"></div>
               </div>
-              <span className="font-light tracking-widest text-lg">WATCH FILM</span>
+              <span className="font-light tracking-widest text-lg">
+                WATCH FILM
+              </span>
             </button>
           </div>
         </div>
-
- 
       </div>
 
-      <style >{`
+      <style>{`
         @keyframes mesh-1 {
           0% { transform: translate(0, 0) rotate(0deg) scale(1); }
           33% { transform: translate(30px, -30px) rotate(120deg) scale(1.1); }

@@ -1,22 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import Header from './components/Header';
-import Hero from './components/Hero';
-import Features from './components/Features';
-import Benefits from './components/Benefits';
-import HowItWorks from './components/HowItWorks';
-import Testimonials from './components/Testimonials';
-import Download from './components/Download';
-import Footer from './components/Footer';
+import React, { useEffect, useState } from "react";
+import Header from "./components/Header";
+import Hero from "./components/Hero";
+import Features from "./components/Features";
+import Benefits from "./components/Benefits";
+import HowItWorks from "./components/HowItWorks";
+import Testimonials from "./components/Testimonials";
+import Download from "./components/Download";
+import Footer from "./components/Footer";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     // Simulate loading with progress
     const interval = setInterval(() => {
-      setLoadingProgress(prev => {
+      setLoadingProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval);
           setTimeout(() => setIsLoading(false), 500);
@@ -33,9 +34,24 @@ function App() {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
+
+  useEffect(() => {
+    let animationId: number;
+
+    const animateCursor = () => {
+      setCursorPosition((prev) => ({
+        x: prev.x + (mousePosition.x - prev.x) * 0.12,
+        y: prev.y + (mousePosition.y - prev.y) * 0.12,
+      }));
+      animationId = requestAnimationFrame(animateCursor);
+    };
+
+    animationId = requestAnimationFrame(animateCursor);
+    return () => cancelAnimationFrame(animationId);
+  }, [mousePosition]);
 
   if (isLoading) {
     return (
@@ -51,7 +67,7 @@ function App() {
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
                 animationDelay: `${Math.random() * 5}s`,
-                animationDuration: `${5 + Math.random() * 10}s`
+                animationDuration: `${5 + Math.random() * 10}s`,
               }}
             />
           ))}
@@ -64,7 +80,7 @@ function App() {
               {Math.floor(loadingProgress)}%
             </div>
             <div className="w-64 h-px bg-white/10 relative overflow-hidden">
-              <div 
+              <div
                 className="absolute inset-y-0 left-0 bg-gradient-to-r from-transparent via-white to-transparent transition-all duration-300"
                 style={{ width: `${loadingProgress}%` }}
               />
@@ -85,7 +101,10 @@ function App() {
           </p>
         </div>
 
-        <style >{`
+        <style>{`
+          * {
+            cursor: none !important;
+          }
           @keyframes gradient {
             0% { transform: rotate(0deg) scale(2); }
             100% { transform: rotate(360deg) scale(2); }
@@ -128,21 +147,25 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white overflow-x-hidden">
+    <div
+      className="min-h-screen bg-black text-white overflow-x-hidden"
+      style={{ cursor: "none" }}
+    >
       {/* Custom Cursor */}
-      <div 
-        className="fixed w-6 h-6 pointer-events-none z-[100] mix-blend-difference transition-transform duration-100"
+      <div
+        className="fixed w-6 h-6 pointer-events-none z-[100] mix-blend-difference"
         style={{
-          left: mousePosition.x - 12,
-          top: mousePosition.y - 12,
-          transform: 'translate(0, 0)'
+          left: cursorPosition.x - 12,
+          top: cursorPosition.y - 12,
+          transform: "translate(0, 0)",
         }}
       >
         <div className="w-full h-full bg-white rounded-full animate-pulse"></div>
       </div>
 
       {/* Noise Texture Overlay */}
-      <div className="fixed inset-0 pointer-events-none z-50 opacity-[0.03]"
+      <div
+        className="fixed inset-0 pointer-events-none z-50 opacity-[0.03]"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
         }}
