@@ -124,7 +124,7 @@ const Hero = () => {
   return (
     <section
       ref={heroRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black"
+      className="relative min-h-fit sm:min-h-screen flex items-start sm:items-center justify-center overflow-hidden bg-black py-20 sm:py-0"
     >
       {/* Particle Canvas */}
       <canvas
@@ -144,8 +144,8 @@ const Hero = () => {
                 : "opacity-0 scale-110"
             }`}
             style={{
-              transform: `translate(${mousePosition.x * 0.5}px, ${
-                mousePosition.y * 0.5
+              transform: `translate(${mousePosition.x * 0.2}px, ${
+                mousePosition.y * 0.2
               }px) scale(1.1)`,
             }}
           >
@@ -170,25 +170,25 @@ const Hero = () => {
 
       {/* Floating Orbs */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 left-20 w-96 h-96 bg-white/5 rounded-full blur-3xl animate-float-1"></div>
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-white/3 rounded-full blur-3xl animate-float-2"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-white/2 rounded-full blur-3xl animate-pulse-slow"></div>
+        <div className="absolute top-10 sm:top-20 left-10 sm:left-20 w-48 h-48 sm:w-96 sm:h-96 bg-white/5 rounded-full blur-3xl animate-float-1"></div>
+        <div className="absolute bottom-10 sm:bottom-20 right-10 sm:right-20 w-48 h-48 sm:w-96 sm:h-96 bg-white/3 rounded-full blur-3xl animate-float-2"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[600px] sm:h-[600px] bg-white/2 rounded-full blur-3xl animate-pulse-slow"></div>
       </div>
 
       {/* Content */}
-      <div className="relative z-20 max-w-7xl mx-auto px-6 lg:px-8 text-center">
+      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left sm:text-center">
         <div className="max-w-6xl mx-auto">
           {/* Animated Tag */}
-          <div className="inline-flex items-center gap-3 px-8 py-4 mt-20  rounded-full border border-white/10 bg-white/5 backdrop-blur-2xl mb-10 animate-slide-down hover:bg-white/10 transition-all duration-500 cursor-pointer group">
-            <Sparkles className="w-5 h-5 animate-spin-slow" />
-            <span className="text-sm text-gray-300 tracking-[0.3em] font-light">
+          <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-8 py-3 sm:py-4 mt-0 sm:mt-20 rounded-full border border-white/10 bg-white/5 backdrop-blur-2xl mb-6 sm:mb-10 animate-slide-down hover:bg-white/10 transition-all duration-500 cursor-pointer group">
+            <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 animate-spin-slow" />
+            <span className="text-xs sm:text-sm text-gray-300 tracking-[0.2em] sm:tracking-[0.3em] font-light">
               EXPERIENCE THE FUTURE
             </span>
-            <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white rounded-full animate-pulse"></div>
           </div>
 
           {/* Main Heading with Glitch Effect */}
-          <h1 className="relative text-7xl md:text-9xl lg:text-[12rem] font-thin text-white mb-2 leading-none tracking-tighter">
+          <h1 className="relative text-4xl sm:text-6xl md:text-9xl lg:text-[12rem] font-thin text-white mb-2 leading-none tracking-tighter">
             <span
               className={`block animate-slide-up opacity-0 ${
                 textGlitch ? "glitch" : ""
@@ -219,7 +219,7 @@ const Hero = () => {
 
           {/* Subtitle with Typewriter Effect */}
           <p
-            className="text-xl md:text-2xl lg:text-3xl text-gray-400 mb-16 leading-relaxed max-w-4xl mx-auto font-extralight animate-fade-in opacity-0 tracking-wide"
+            className="text-base sm:text-xl md:text-2xl lg:text-3xl text-gray-400 mb-8 sm:mb-16 leading-relaxed max-w-4xl mx-auto font-extralight animate-fade-in opacity-0 tracking-wide"
             style={{ animationDelay: "800ms", animationFillMode: "forwards" }}
           >
             The future of restaurant reservations. Seamless bookings,
@@ -230,18 +230,18 @@ const Hero = () => {
 
           {/* CTA Buttons with Liquid Effect */}
           <div
-            className="flex flex-col sm:flex-row gap-8 justify-center items-center animate-slide-up opacity-0"
+            className="flex flex-row gap-4 sm:gap-8 justify-start sm:justify-center items-center animate-slide-up opacity-0"
             style={{ animationDelay: "1000ms", animationFillMode: "forwards" }}
           >
             <button
               onClick={scrollToDownload}
-              className="group relative px-12 py-6 overflow-hidden rounded-full font-light text-lg"
+              className="group relative px-6 sm:px-12 py-3 sm:py-6 overflow-hidden rounded-full font-light text-sm sm:text-lg w-auto"
             >
               <div className="absolute inset-0 bg-white transition-transform duration-700 group-hover:scale-110"></div>
               <div className="absolute inset-0 bg-gradient-to-r from-gray-100 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-              <span className="relative z-10 flex items-center gap-4 text-black">
+              <span className="relative z-10 flex items-center gap-2 sm:gap-4 text-black">
                 Download Now
-                <div className="w-2 h-2 bg-black rounded-full group-hover:scale-150 transition-transform duration-500" />
+                <div className="w-1 h-1 sm:w-2 sm:h-2 bg-black rounded-full group-hover:scale-150 transition-transform duration-500" />
               </span>
               {/* Liquid effect */}
               <div className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-40 h-40 bg-white rounded-full blur-3xl opacity-0 group-hover:opacity-30 group-hover:-bottom-10 transition-all duration-700"></div>
@@ -249,17 +249,17 @@ const Hero = () => {
 
             <button
               onClick={() => setIsVideoPlaying(!isVideoPlaying)}
-              className="group flex items-center gap-5 text-white/60 hover:text-white transition-all duration-700"
+              className="group flex items-center gap-2 sm:gap-5 text-white/60 hover:text-white transition-all duration-700 w-auto"
             >
               <div className="relative">
-                <div className="w-20 h-20 rounded-full border border-white/20 flex items-center justify-center group-hover:border-white/60 transition-all duration-700 group-hover:scale-110">
+                <div className="w-12 h-12 sm:w-20 sm:h-20 rounded-full border border-white/20 flex items-center justify-center group-hover:border-white/60 transition-all duration-700 group-hover:scale-110">
                   <div className="absolute inset-0 rounded-full bg-white/5 scale-0 group-hover:scale-100 transition-transform duration-700"></div>
-                  <Play className="w-8 h-8 ml-1 relative z-10" />
+                  <Play className="w-4 h-4 sm:w-8 sm:h-8 ml-1 relative z-10" />
                 </div>
                 {/* Ripple effect */}
                 <div className="absolute inset-0 rounded-full border border-white/20 animate-ping"></div>
               </div>
-              <span className="font-light tracking-widest text-lg">
+              <span className="font-light tracking-widest text-xs sm:text-lg">
                 WATCH FILM
               </span>
             </button>
