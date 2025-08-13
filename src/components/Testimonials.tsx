@@ -131,7 +131,7 @@ const Testimonials = () => {
           <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-12 md:p-20">
             <Quote className="w-16 h-16 text-white/10 mb-12" />
 
-            <div className="relative min-h-[300px]">
+            <div className="relative min-h-[300px] overflow-hidden">
               {testimonials.map((testimonial, index) => (
                 <div
                   key={index}
@@ -150,11 +150,13 @@ const Testimonials = () => {
                   <div className="flex items-center justify-between flex-wrap gap-6">
                     <div className="flex items-center gap-6">
                       <div className="relative">
-                        <img
-                          src={testimonial.image}
-                          alt={testimonial.name}
-                          className="w-20 h-20 rounded-full object-cover"
-                        />
+                        <div className="w-20 h-20 rounded-full overflow-hidden">
+                          <img
+                            src={testimonial.image}
+                            alt={testimonial.name}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
                         <div className="absolute inset-0 rounded-full border-2 border-white/20"></div>
                       </div>
                       <div>
@@ -204,11 +206,12 @@ const Testimonials = () => {
               <button
                 key={index}
                 onClick={() => setActiveTestimonial(index)}
-                className={`transition-all duration-500 ${
+                className={`transition-all duration-500 focus:outline-none ${
                   index === activeTestimonial
                     ? "w-12 h-1 bg-white"
                     : "w-3 h-1 bg-white/30 hover:bg-white/50"
                 } rounded-full`}
+                aria-label={`Go to testimonial ${index + 1}`}
               />
             ))}
           </div>
@@ -266,11 +269,13 @@ const Testimonials = () => {
                 </p>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <img
-                      src={review.image}
-                      alt={review.name}
-                      className="w-10 h-10 rounded-full object-cover"
-                    />
+                    <div className="w-10 h-10 rounded-full overflow-hidden">
+                      <img
+                        src={review.image}
+                        alt={review.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
                     <div>
                       <p className="font-light text-white">{review.name}</p>
                       <p className="text-sm text-gray-500">Verified User</p>

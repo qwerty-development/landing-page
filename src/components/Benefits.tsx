@@ -191,11 +191,13 @@ const Benefits = () => {
                          style={{
                            transform: isActive ? `translate(${mousePosition.x * 10}px, ${mousePosition.y * 10}px) scale(1.05)` : ''
                          }}>
-                      <img
-                        src={exp.image}
-                        alt={exp.title}
-                        className="w-full h-full object-cover"
-                      />
+                      <div className="w-full h-full rounded-3xl overflow-hidden">
+                        <img
+                          src={exp.image}
+                          alt={exp.title}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
                     </div>
                     
                     {/* Gradient Overlays */}
@@ -228,11 +230,12 @@ const Benefits = () => {
               <button
                 key={index}
                 onClick={() => setActiveSlide(index)}
-                className={`transition-all duration-500 ${
+                className={`transition-all duration-500 focus:outline-none ${
                   index === activeSlide 
                     ? 'w-16 h-2 bg-white' 
                     : 'w-2 h-2 bg-white/30 hover:bg-white/50'
                 } rounded-full`}
+                aria-label={`Go to experience ${index + 1}`}
               />
             ))}
           </div>
@@ -261,9 +264,9 @@ const Benefits = () => {
                   onMouseLeave={() => setHoveredCard(null)}
                   onClick={() => setSelectedImage(index)}
                 >
-                  <div className={`relative w-[400px] h-[500px] rounded-3xl overflow-hidden transition-all duration-700 ${
+                  <div className={`relative w-[400px] h-[500px] transition-all duration-700 ${
                     hoveredCard === index ? 'scale-105' : 'scale-100'
-                  }`}>
+                  } rounded-3xl overflow-hidden`}>
                     {/* 3D Tilt Effect */}
                     <div className="absolute inset-0"
                          style={{
@@ -271,14 +274,16 @@ const Benefits = () => {
                              ? 'perspective(1000px) rotateY(5deg) rotateX(-5deg)' 
                              : ''
                          }}>
-                      <img
-                        src={image.url}
-                        alt={image.title}
-                        className="w-full h-full object-cover transition-transform duration-700"
+                      <div className="w-full h-full transition-transform duration-700"
                         style={{
                           transform: hoveredCard === index ? 'scale(1.1)' : 'scale(1)'
-                        }}
-                      />
+                        }}>
+                        <img
+                          src={image.url}
+                          alt={image.title}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
                     </div>
                     
                     {/* Overlay Content */}
@@ -380,11 +385,13 @@ const Benefits = () => {
         <div className="fixed inset-0 bg-black/90 backdrop-blur-xl z-50 flex items-center justify-center p-8"
              onClick={() => setSelectedImage(null)}>
           <div className="relative max-w-5xl w-full">
-            <img
-              src={galleryImages[selectedImage].url}
-              alt={galleryImages[selectedImage].title}
-              className="w-full h-auto rounded-3xl"
-            />
+            <div className="w-full h-auto rounded-3xl overflow-hidden">
+              <img
+                src={galleryImages[selectedImage].url}
+                alt={galleryImages[selectedImage].title}
+                className="w-full h-auto object-cover"
+              />
+            </div>
             <div className="absolute bottom-8 left-8 text-white">
               <p className="text-sm text-white/60 mb-2">{galleryImages[selectedImage].category}</p>
               <h3 className="text-4xl font-light">{galleryImages[selectedImage].title}</h3>

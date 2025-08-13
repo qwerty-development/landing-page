@@ -42,7 +42,7 @@ const Hero = () => {
     return () => clearInterval(glitchInterval);
   }, []);
 
-  // Particle effect canvas
+  // Particle effect canvas (independent fizz animation)
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -53,7 +53,7 @@ const Hero = () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const particles: Array<{
+    let particles: Array<{
       x: number;
       y: number;
       vx: number;
@@ -71,6 +71,22 @@ const Hero = () => {
         size: Math.random() * 3,
         life: 1,
       });
+    };
+
+    // Enhanced fizz creation inspired by bryan-branch but maintaining main branch functionality
+    const createFizzBurst = (x: number, y: number) => {
+      for (let i = 0; i < 8; i++) {
+        const angle = (Math.PI * 2 * i) / 8;
+        const speed = Math.random() * 1.5 + 0.5;
+        particles.push({
+          x,
+          y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          size: Math.random() * 2 + 1,
+          life: 1,
+        });
+      }
     };
 
     const animate = () => {
@@ -103,22 +119,46 @@ const Hero = () => {
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
 
+      // Main branch functionality: mouse-following particles
       for (let i = 0; i < 3; i++) {
         createParticle(x + Math.random() * 10 - 5, y + Math.random() * 10 - 5);
       }
+
+      // Enhanced: occasional fizz burst for more dynamic effect
+      if (Math.random() < 0.1) {
+        createFizzBurst(x, y);
+      }
+    };
+
+    // Add automatic fizz creation for ambient effect (inspired by bryan-branch)
+    let autoFizzInterval: number;
+    const startAutoFizz = () => {
+      autoFizzInterval = setInterval(() => {
+        const randomX = Math.random() * canvas.width;
+        const randomY = Math.random() * canvas.height * 0.7 + canvas.height * 0.15;
+        createFizzBurst(randomX, randomY);
+      }, 3000);
     };
 
     canvas.addEventListener("mousemove", handleMouseMove);
     animate();
+    startAutoFizz();
 
     return () => {
       canvas.removeEventListener("mousemove", handleMouseMove);
+      clearInterval(autoFizzInterval);
     };
   }, []);
 
   const scrollToDownload = () => {
     const element = document.getElementById("download");
     element?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  // Scroll to film section (HowItWorks)
+  const scrollToFilm = () => {
+    const element = document.getElementById('play-button');
+    element?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (

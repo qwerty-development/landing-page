@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Smartphone, Star, Shield, Zap, Download, ChevronRight, Apple } from 'lucide-react';
+import tableShowcase from '/dist/assets/tableSearchPage.jpg';
 
 const DownloadSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -145,20 +146,19 @@ const DownloadSection = () => {
           >
             <div 
               className="relative"
-              style={{
-                transform: `perspective(1000px) rotateY(${mousePosition.x * 0.5}deg) rotateX(${-mousePosition.y * 0.5}deg)`
-              }}
             >
               {/* Main Phone */}
               <div className="relative z-20 w-80 h-[650px] bg-black rounded-[3rem] p-3 shadow-2xl">
                 <div className="w-full h-full bg-white rounded-[2.5rem] overflow-hidden">
                   {/* Phone Screen Content */}
                   <div className="relative h-full">
-                    <img
-                      src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&q=80&fm=jpg&auto=format&fit=crop"
-                      alt="App interface"
-                      className="w-full h-full object-cover"
-                    />
+                    <div className="w-full h-full rounded-[2.5rem] overflow-hidden">
+                      <img
+                        src={tableShowcase}
+                        alt="App interface"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                     <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
                       <h4 className="text-2xl font-light mb-2">Welcome to Plate</h4>
