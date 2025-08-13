@@ -121,7 +121,7 @@ const Footer = () => {
                 <ChevronRight className="w-5 h-5" />
               </button>
               {isSubmitting && (
-                <div className="absolute right-2 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full border-2 border-white/30 border-t-white animate-spin"></div>
+                <div className="absolute right-2 top-1 -translate-y-1/2 w-12 h-12 rounded-full border-2 border-white/30 border-t-white animate-spin"></div>
               )}
             </form>
           </div>
