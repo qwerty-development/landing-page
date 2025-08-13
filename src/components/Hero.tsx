@@ -158,7 +158,7 @@ const Hero = () => {
 
   // Scroll to film section (HowItWorks)
   const scrollToFilm = () => {
-    const element = document.getElementById("play-button");
+    const element = document.getElementById("film-section");
     element?.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -295,7 +295,7 @@ const Hero = () => {
             </button>
 
             <button
-              onClick={() => setIsVideoPlaying(!isVideoPlaying)}
+              onClick={scrollToFilm}
               className="group flex items-center gap-2 sm:gap-5 text-white/60 hover:text-white transition-all duration-700 w-auto"
             >
               <div className="relative">

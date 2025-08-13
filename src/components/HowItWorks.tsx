@@ -272,6 +272,7 @@ const HowItWorks = () => {
 
         {/* Video Section */}
         <div
+          id="film-section"
           ref={videoRef}
           className={`relative rounded-3xl overflow-hidden bg-black h-[600px] group cursor-pointer transition-all duration-1000 delay-600 ${
             isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
