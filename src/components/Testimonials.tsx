@@ -128,61 +128,62 @@ const Testimonials = () => {
             isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
           }`}
         >
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-12 md:p-20">
-            <Quote className="w-16 h-16 text-white/10 mb-12" />
+          <div className="relative overflow-visible">
+            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-12 md:p-20 overflow-hidden">
+              <Quote className="w-16 h-16 text-white/10 mb-12" />
 
-            <div className="relative min-h-[300px] overflow-hidden">
-              {testimonials.map((testimonial, index) => (
-                <div
-                  key={index}
-                  className={`absolute inset-0 transition-all duration-1000 ${
-                    index === activeTestimonial
-                      ? "opacity-100 translate-x-0 scale-100"
-                      : index < activeTestimonial
-                      ? "opacity-0 -translate-x-full scale-95"
-                      : "opacity-0 translate-x-full scale-95"
-                  }`}
-                >
-                  <p className="text-2xl md:text-3xl lg:text-4xl font-thin text-white mb-16 leading-relaxed">
-                    "{testimonial.text}"
-                  </p>
+              <div className="relative min-h-[300px]">
+                {testimonials.map((testimonial, index) => (
+                  <div
+                    key={index}
+                    className={`absolute inset-0 transition-all duration-1000 ${
+                      index === activeTestimonial
+                        ? "opacity-100 translate-x-0 scale-100"
+                        : index < activeTestimonial
+                        ? "opacity-0 -translate-x-full scale-95"
+                        : "opacity-0 translate-x-full scale-95"
+                    }`}
+                  >
+                    <p className="text-2xl md:text-3xl lg:text-4xl font-thin text-white mb-16 leading-relaxed">
+                      "{testimonial.text}"
+                    </p>
 
-                  <div className="flex items-center justify-between flex-wrap gap-6">
-                    <div className="flex items-center gap-6">
-                      <div className="relative">
-                        <div className="w-20 h-20 rounded-full overflow-hidden">
-                          <img
-                            src={testimonial.image}
-                            alt={testimonial.name}
-                            className="w-full h-full object-cover"
-                          />
+                    <div className="flex items-center justify-between flex-wrap gap-6">
+                      <div className="flex items-center gap-6">
+                        <div className="relative">
+                          <div className="w-20 h-20 rounded-full overflow-hidden">
+                            <img
+                              src={testimonial.image}
+                              alt={testimonial.name}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                          <div className="absolute inset-0 rounded-full border-2 border-white/20"></div>
                         </div>
-                        <div className="absolute inset-0 rounded-full border-2 border-white/20"></div>
+                        <div>
+                          <h4 className="text-xl font-light text-white">
+                            {testimonial.name}
+                          </h4>
+                          <p className="text-gray-400">{testimonial.role}</p>
+                          <p className="text-sm text-gray-500 mt-1">
+                            {testimonial.location}
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <h4 className="text-xl font-light text-white">
-                          {testimonial.name}
-                        </h4>
-                        <p className="text-gray-400">{testimonial.role}</p>
-                        <p className="text-sm text-gray-500 mt-1">
-                          {testimonial.location}
-                        </p>
-                      </div>
-                    </div>
 
-                    <div className="flex gap-1">
-                      {[...Array(testimonial.rating)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className="w-5 h-5 fill-white text-white"
-                        />
-                      ))}
+                      <div className="flex gap-1">
+                        {[...Array(testimonial.rating)].map((_, i) => (
+                          <Star
+                            key={i}
+                            className="w-5 h-5 fill-white text-white"
+                          />
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-
             {/* Navigation */}
             <div className="absolute top-1/2 -translate-y-1/2 -left-6 -right-6 flex justify-between pointer-events-none">
               <button
