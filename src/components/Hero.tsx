@@ -42,18 +42,17 @@ const Hero = () => {
     return () => clearInterval(glitchInterval);
   }, []);
 
-  // Particle effect canvas
+  // Particle effect canvas (independent fizz animation)
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const particles: Array<{
+    let particles: Array<{
       x: number;
       y: number;
       vx: number;
@@ -62,62 +61,70 @@ const Hero = () => {
       life: number;
     }> = [];
 
-    const createParticle = (x: number, y: number) => {
-      particles.push({
-        x,
-        y,
-        vx: (Math.random() - 0.5) * 2,
-        vy: (Math.random() - 0.5) * 2,
-        size: Math.random() * 3,
-        life: 1
-      });
-    };
-
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      particles.forEach((particle, index) => {
-        particle.x += particle.vx;
-        particle.y += particle.vy;
-        particle.life -= 0.01;
-        particle.size *= 0.99;
-
-        ctx.save();
-        ctx.globalAlpha = particle.life;
-        ctx.fillStyle = '#ffffff';
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-
-        if (particle.life <= 0) {
-          particles.splice(index, 1);
-        }
-      });
-
-      requestAnimationFrame(animate);
-    };
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      
-      for (let i = 0; i < 3; i++) {
-        createParticle(x + Math.random() * 10 - 5, y + Math.random() * 10 - 5);
+    // Create a burst of fizz particles at random positions
+    const createFizz = () => {
+      const centerX = Math.random() * canvas.width;
+      const centerY = Math.random() * canvas.height * 0.7 + canvas.height * 0.15;
+      for (let i = 0; i < 18; i++) {
+        const angle = (Math.PI * 2 * i) / 18;
+        const speed = Math.random() * 1.5 + 0.5;
+        particles.push({
+          x: centerX,
+          y: centerY,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          size: Math.random() * 2 + 1,
+          life: 1
+        });
       }
     };
 
-    canvas.addEventListener('mousemove', handleMouseMove);
+  let fizzTimeout: number;
+  let fizzInterval: number;
+
+    // Shorter initial delay
+    fizzTimeout = setTimeout(() => {
+      createFizz();
+      fizzInterval = setInterval(createFizz, 1800);
+    }, 400); // Shorter delay before first fizz
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life -= 0.012;
+        p.size *= 0.98;
+        ctx.save();
+        ctx.globalAlpha = p.life;
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+        if (p.life <= 0) {
+          particles.splice(i, 1);
+        }
+      }
+      requestAnimationFrame(animate);
+    };
     animate();
 
     return () => {
-      canvas.removeEventListener('mousemove', handleMouseMove);
+      clearTimeout(fizzTimeout);
+      clearInterval(fizzInterval);
     };
   }, []);
 
   const scrollToDownload = () => {
     const element = document.getElementById('download');
+    element?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  // Scroll to film section (HowItWorks)
+  const scrollToFilm = () => {
+    const element = document.getElementById('play-button');
     element?.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -221,9 +228,9 @@ const Hero = () => {
               {/* Liquid effect */}
               <div className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-40 h-40 bg-white rounded-full blur-3xl opacity-0 group-hover:opacity-30 group-hover:-bottom-10 transition-all duration-700"></div>
             </button>
-            
+            {/* Watch Film Button - smooth scroll to film section */}
             <button 
-              onClick={() => setIsVideoPlaying(!isVideoPlaying)}
+              onClick={scrollToFilm}
               className="group flex items-center gap-5 text-white/60 hover:text-white transition-all duration-700"
             >
               <div className="relative">

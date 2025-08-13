@@ -121,6 +121,17 @@ const Features = () => {
     },
   ];
 
+  // Generate consistent particles for each feature
+  const [featureParticles] = useState(() =>
+    mainFeatures.map(() =>
+      Array.from({ length: 20 }).map(() => ({
+        left: Math.random() * 100,
+        delay: Math.random() * 5,
+        duration: 5 + Math.random() * 10
+      }))
+    )
+  );
+
   return (
     <section
       id="features"
@@ -284,24 +295,26 @@ const Features = () => {
                       : "opacity-0 scale-110"
                   }`}
                 >
-                  <img
-                    src={feature.image}
-                    alt={feature.title}
-                    className="w-full h-full object-cover"
-                  />
+                  <div className="w-full h-full rounded-3xl overflow-hidden">
+                    <img
+                      src={feature.image}
+                      alt={feature.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
 
                   {/* Animated Particles */}
                   <div className="absolute inset-0 overflow-hidden">
                     {activeFeature === index &&
-                      [...Array(20)].map((_, i) => (
+                      featureParticles[index].map((p, i) => (
                         <div
                           key={i}
                           className="absolute w-1 h-1 bg-white rounded-full animate-particle"
                           style={{
-                            left: `${Math.random() * 100}%`,
-                            animationDelay: `${Math.random() * 5}s`,
-                            animationDuration: `${5 + Math.random() * 10}s`,
+                            left: `${p.left}%`,
+                            animationDelay: `${p.delay}s`,
+                            animationDuration: `${p.duration}s`,
                           }}
                         />
                       ))}
@@ -313,12 +326,14 @@ const Features = () => {
                       {feature.title}
                     </h3>
                     <div className="flex gap-2 mt-4">
-                      {[...Array(3)].map((_, i) => (
-                        <div
+                      {mainFeatures.map((_, i) => (
+                        <button
                           key={i}
-                          className={`h-1 rounded-full transition-all duration-700 ${
-                            i === 0 ? "w-12 bg-white" : "w-3 bg-white/30"
+                          onClick={() => setActiveFeature(i)}
+                          className={`h-1 rounded-full transition-all duration-700 focus:outline-none ${
+                            i === activeFeature ? "w-12 bg-white" : "w-3 bg-white/30 hover:bg-white/50"
                           }`}
+                          aria-label={`Go to feature ${i + 1}`}
                         />
                       ))}
                     </div>

@@ -190,11 +190,13 @@ const HowItWorks = () => {
                         : 'opacity-0 scale-105'
                     }`}
                   >
-                    <img
-                      src={step.image}
-                      alt={step.title}
-                      className="w-full h-full object-cover"
-                    />
+                    <div className="w-full h-full rounded-3xl overflow-hidden">
+                      <img
+                        src={step.image}
+                        alt={step.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
                     <div className="absolute bottom-12 left-12 right-12 text-white">
                       <div className="flex items-center gap-4 mb-6">
@@ -213,11 +215,12 @@ const HowItWorks = () => {
                   <button
                     key={index}
                     onClick={() => setActiveStep(index)}
-                    className={`transition-all duration-500 ${
+                    className={`transition-all duration-500 focus:outline-none ${
                       index === activeStep 
                         ? 'w-12 h-1 bg-white' 
                         : 'w-3 h-1 bg-white/30 hover:bg-white/50'
                     } rounded-full`}
+                    aria-label={`Go to step ${index + 1}`}
                   />
                 ))}
               </div>
@@ -235,17 +238,20 @@ const HowItWorks = () => {
             transform: `perspective(1000px) rotateX(${mousePosition.y}deg) rotateY(${mousePosition.x}deg)`
           }}
         >
-          <img
-            src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=1920&q=80&fm=jpg&auto=format&fit=crop&grayscale"
-            alt="Restaurant interior"
-            className="w-full h-full object-cover opacity-40 group-hover:opacity-60 transition-opacity duration-700"
-          />
+          <div className="w-full h-full rounded-3xl overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=1920&q=80&fm=jpg&auto=format&fit=crop&grayscale"
+              alt="Restaurant interior"
+              className="w-full h-full object-cover opacity-40 group-hover:opacity-60 transition-opacity duration-700"
+            />
+          </div>
           <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black"></div>
-          <div className="absolute inset-0 flex items-center justify-center">
+          <div className="absolute inset-0 flex items-center justify-center" id='play-button'>
             <div className="text-center">
-              <div className="relative w-24 h-24 rounded-full border border-white/20 flex items-center justify-center mb-8 group-hover:scale-110 transition-all duration-700">
+              {/* Centered Play Button */}
+              <div className="relative flex items-center justify-center w-24 h-24 mx-auto rounded-full border border-white/20 mb-8 group-hover:scale-110 transition-all duration-700">
                 <div className="absolute inset-0 rounded-full bg-white/10 backdrop-blur-sm"></div>
-                <Play className="w-10 h-10 text-white ml-1 relative z-10" />
+                <Play className="w-10 h-10 text-white relative z-10" style={{ marginLeft: 0 }}/>
                 <div className="absolute inset-0 rounded-full bg-white/20 scale-100 animate-ping"></div>
               </div>
               <h3 className="text-4xl font-thin text-white mb-2">See Plate in Action</h3>
