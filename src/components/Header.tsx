@@ -84,7 +84,7 @@ const Header = () => {
                 <span className={`text-2xl font-thin text-white tracking-[0.3em] transition-all duration-700 ${
                   isScrolled ? 'tracking-[0.2em]' : 'tracking-[0.3em]'
                 }`}>
-                  BOOKLET
+                  PLATE
                 </span>
                 <div className="absolute -inset-2 bg-white/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-full"></div>
                 

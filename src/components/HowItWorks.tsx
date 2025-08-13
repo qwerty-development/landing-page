@@ -12,7 +12,7 @@ const HowItWorks = () => {
     {
       number: '01',
       icon: Smartphone,
-      title: 'Download Booklet',
+      title: 'Download Plate',
       description: 'Get the app on your iPhone or Android device',
       image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80&fm=jpg&auto=format&fit=crop&grayscale',
       features: ['Free download', 'No credit card', 'Quick setup']
@@ -248,7 +248,7 @@ const HowItWorks = () => {
                 <Play className="w-10 h-10 text-white ml-1 relative z-10" />
                 <div className="absolute inset-0 rounded-full bg-white/20 scale-100 animate-ping"></div>
               </div>
-              <h3 className="text-4xl font-thin text-white mb-2">See Booklet in Action</h3>
+              <h3 className="text-4xl font-thin text-white mb-2">See Plate in Action</h3>
               <p className="text-white/60 font-light">2 minute walkthrough</p>
             </div>
           </div>

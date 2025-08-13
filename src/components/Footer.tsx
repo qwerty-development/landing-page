@@ -74,7 +74,7 @@ const Footer = () => {
           <div>
             <div className="mb-8">
               <span className="text-3xl font-thin tracking-wider">
-                BOOKLET
+                PLATE
               </span>
             </div>
             <p className="text-gray-400 text-lg leading-relaxed max-w-md mb-12">
@@ -154,7 +154,7 @@ const Footer = () => {
         {/* Bottom Section */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-6 pt-12 border-t border-white/10">
           <div className="flex flex-col md:flex-row items-center gap-6 text-sm text-gray-400">
-            <span>© 2025 Booklet. All rights reserved.</span>
+            <span>© 2025 Plate. All rights reserved.</span>
             <span className="hidden md:block">·</span>
             <span>Crafted with love in Lebanon</span>
           </div>
