@@ -135,7 +135,8 @@ const Hero = () => {
     const startAutoFizz = () => {
       autoFizzInterval = setInterval(() => {
         const randomX = Math.random() * canvas.width;
-        const randomY = Math.random() * canvas.height * 0.7 + canvas.height * 0.15;
+        const randomY =
+          Math.random() * canvas.height * 0.7 + canvas.height * 0.15;
         createFizzBurst(randomX, randomY);
       }, 3000);
     };
@@ -157,8 +158,8 @@ const Hero = () => {
 
   // Scroll to film section (HowItWorks)
   const scrollToFilm = () => {
-    const element = document.getElementById('play-button');
-    element?.scrollIntoView({ behavior: 'smooth' });
+    const element = document.getElementById("play-button");
+    element?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -169,7 +170,7 @@ const Hero = () => {
       {/* Particle Canvas */}
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 pointer-events-none z-30"
+        className="absolute inset-0 pointer-events-none z-10"
       />
 
       {/* Animated Background Layers */}
@@ -216,18 +217,18 @@ const Hero = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left sm:text-center">
+      <div className="relative z-40 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left sm:text-center">
         <div className="max-w-6xl mx-auto">
           {/* Animated Tag */}
           <div className="flex justify-center sm:justify-center mb-6 sm:mb-10">
             <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-8 py-3 sm:py-4 mt-0 sm:mt-20 rounded-full border border-white/10 bg-white/5 backdrop-blur-2xl animate-slide-down hover:bg-white/10 transition-all duration-500 cursor-pointer group relative overflow-hidden">
               {/* Mobile glow effect */}
               <div className="absolute inset-0 bg-gradient-to-r from-white/10 via-transparent to-white/10 opacity-0 sm:group-hover:opacity-100 transition-opacity duration-700"></div>
-              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 animate-spin-slow relative z-10" />
-              <span className="text-xs sm:text-sm text-gray-300 tracking-[0.2em] sm:tracking-[0.3em] font-light relative z-10">
+              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 animate-spin-slow relative z-50" />
+              <span className="text-xs sm:text-sm text-gray-300 tracking-[0.2em] sm:tracking-[0.3em] font-light relative z-50">
                 EXPERIENCE THE FUTURE
               </span>
-              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white rounded-full animate-pulse relative z-10"></div>
+              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white rounded-full animate-pulse relative z-50"></div>
               {/* Mobile shimmer effect */}
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 sm:hidden"></div>
             </div>
@@ -285,7 +286,7 @@ const Hero = () => {
             >
               <div className="absolute inset-0 bg-white transition-transform duration-700 group-hover:scale-110"></div>
               <div className="absolute inset-0 bg-gradient-to-r from-gray-100 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-              <span className="relative z-10 flex items-center gap-2 sm:gap-4 text-black">
+              <span className="relative z-50 flex items-center gap-2 sm:gap-4 text-black">
                 Download Now
                 <div className="w-1 h-1 sm:w-2 sm:h-2 bg-black rounded-full group-hover:scale-150 transition-transform duration-500" />
               </span>
@@ -300,7 +301,7 @@ const Hero = () => {
               <div className="relative">
                 <div className="w-12 h-12 sm:w-20 sm:h-20 rounded-full border border-white/20 flex items-center justify-center group-hover:border-white/60 transition-all duration-700 group-hover:scale-110">
                   <div className="absolute inset-0 rounded-full bg-white/5 scale-0 group-hover:scale-100 transition-transform duration-700"></div>
-                  <Play className="w-4 h-4 sm:w-8 sm:h-8 ml-1 relative z-10" />
+                  <Play className="w-4 h-4 sm:w-8 sm:h-8 ml-1 relative z-50" />
                 </div>
                 {/* Ripple effect */}
                 <div className="absolute inset-0 rounded-full border border-white/20 animate-ping"></div>
