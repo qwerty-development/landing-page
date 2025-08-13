@@ -60,7 +60,7 @@ const DownloadSection = () => {
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}>
             Join thousands discovering Lebanon's finest dining experiences. 
-            Download Booklet and transform how you dine.
+            Download Plate and transform how you dine.
           </p>
         </div>
 
@@ -161,7 +161,7 @@ const DownloadSection = () => {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                     <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
-                      <h4 className="text-2xl font-light mb-2">Welcome to Booklet</h4>
+                      <h4 className="text-2xl font-light mb-2">Welcome to Plate</h4>
                       <p className="text-white/80">Your dining journey starts here</p>
                     </div>
                   </div>

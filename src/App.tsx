@@ -74,7 +74,7 @@ function App() {
           {/* Logo */}
           <div className="relative">
             <h1 className="text-4xl font-thin tracking-widest text-white animate-fade-in">
-              BOOKLET
+              PLATE
             </h1>
             <div className="absolute -inset-4 bg-white/5 blur-xl animate-pulse"></div>
           </div>

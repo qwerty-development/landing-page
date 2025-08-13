@@ -174,7 +174,7 @@ const Hero = () => {
           {/* Animated Tag */}
           <div className="inline-flex items-center gap-3 px-8 py-4 mt-20  rounded-full border border-white/10 bg-white/5 backdrop-blur-2xl mb-10 animate-slide-down hover:bg-white/10 transition-all duration-500 cursor-pointer group">
             <Sparkles className="w-5 h-5 animate-spin-slow" />
-            <span className="text-sm text-gray-300 tracking-[0.3em] font-light">EXPERIENCE THE FUTURE</span>
+            <span className="text-sm text-gray-300 tracking-[0.3em] font-light">THE FUTURE OF DINING</span>
             <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
           </div>
 

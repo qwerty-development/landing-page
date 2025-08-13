@@ -26,7 +26,7 @@ const Features = () => {
   const mainFeatures = [
     {
       icon: Sparkles,
-      title: 'AI-Powered Discovery',
+      title: 'Your Preferences',
       description: 'Our intelligent algorithm learns your preferences to suggest the perfect dining experience every time.',
       image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80&fm=jpg&auto=format&fit=crop&grayscale',
       gradient: 'from-white/20 via-white/5 to-transparent',
@@ -42,8 +42,8 @@ const Features = () => {
     },
     {
       icon: Star,
-      title: 'Curated Experiences',
-      description: 'From intimate dinners to celebrations, discover restaurants that match your occasion perfectly.',
+      title: 'Rising Stars',
+      description: 'Receive weekly recommendations, ensuring you never miss out on the best dining experiences.',
       image: 'https://images.unsplash.com/photo-1544148103-0773bf10d330?w=800&q=80&fm=jpg&auto=format&fit=crop&grayscale',
       gradient: 'from-white/25 via-white/5 to-transparent',
       particles: '#eeeeee'
