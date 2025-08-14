@@ -26,7 +26,7 @@ const Features = () => {
   const mainFeatures = [
     {
       icon: Sparkles,
-      title: "Your Preferences",
+      title: "Tailored To You",
       description:
         "Our intelligent algorithm learns your preferences to suggest the perfect dining experience every time.",
       image:
@@ -127,7 +127,7 @@ const Features = () => {
       Array.from({ length: 20 }).map(() => ({
         left: Math.random() * 100,
         delay: Math.random() * 5,
-        duration: 5 + Math.random() * 10
+        duration: 5 + Math.random() * 10,
       }))
     )
   );
@@ -331,7 +331,9 @@ const Features = () => {
                           key={i}
                           onClick={() => setActiveFeature(i)}
                           className={`h-1 rounded-full transition-all duration-700 focus:outline-none ${
-                            i === activeFeature ? "w-12 bg-white" : "w-3 bg-white/30 hover:bg-white/50"
+                            i === activeFeature
+                              ? "w-12 bg-white"
+                              : "w-3 bg-white/30 hover:bg-white/50"
                           }`}
                           aria-label={`Go to feature ${i + 1}`}
                         />
@@ -420,7 +422,7 @@ const Features = () => {
             }`}
           >
             <div className="relative z-10">
-              <Calendar className="w-12 h-12 mb-6 text-white/80 group-hover:animate-bounce" />
+              <Calendar className="w-12 h-12 mb-6 text-white/80" />
               <h3 className="text-4xl font-thin mb-4 tracking-wide">
                 Plan Ahead
               </h3>
