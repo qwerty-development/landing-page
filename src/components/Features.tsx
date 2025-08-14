@@ -7,11 +7,9 @@ import {
   MapPin,
   Gift,
   MessageCircle,
-  Shield,
   ChevronRight,
   Calendar,
   Bell,
-  Zap,
   Hexagon,
 } from "lucide-react";
 
@@ -217,7 +215,7 @@ const Features = () => {
               {mainFeatures.map((feature, index) => (
                 <div
                   key={index}
-                  className={`group cursor-pointer p-8 rounded-3xl transition-all duration-700 border relative overflow-hidden ${
+                  className={`group p-8 rounded-3xl transition-all duration-700 border relative overflow-hidden ${
                     activeFeature === index
                       ? "bg-white/5 border-white/20 backdrop-blur-xl transform scale-105"
                       : "border-white/10 hover:border-white/20 hover:bg-white/5"
@@ -388,7 +386,7 @@ const Features = () => {
         {/* Large Feature Cards with Advanced Hover Effects */}
         <div className="grid md:grid-cols-2 gap-8">
           <div
-            className={`relative overflow-hidden rounded-3xl bg-gradient-to-br from-gray-900 to-gray-800 p-12 text-white group cursor-pointer transition-all duration-1000 ${
+            className={`relative overflow-hidden rounded-3xl bg-gradient-to-br from-gray-900 to-gray-800 p-12 text-white group transition-all duration-1000 ${
               isVisible
                 ? "opacity-100 translate-x-0"
                 : "opacity-0 -translate-x-10"
@@ -415,7 +413,7 @@ const Features = () => {
           </div>
 
           <div
-            className={`relative overflow-hidden rounded-3xl bg-gradient-to-br from-gray-800 to-gray-900 p-12 text-white group cursor-pointer transition-all duration-1000 ${
+            className={`relative overflow-hidden rounded-3xl bg-gradient-to-br from-gray-800 to-gray-900 p-12 text-white group transition-all duration-1000 ${
               isVisible
                 ? "opacity-100 translate-x-0"
                 : "opacity-0 translate-x-10"

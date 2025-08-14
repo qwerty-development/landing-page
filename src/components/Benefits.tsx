@@ -6,7 +6,6 @@ import {
   Zap,
   Shield,
   Award,
-  Star,
   Diamond,
   Sparkles,
   Crown,
@@ -24,7 +23,7 @@ const GalleryCard = ({
 }) => {
   return (
     <div
-      className="flex-shrink-0 relative group cursor-pointer hover:scale-105 transition-transform duration-300"
+      className="flex-shrink-0 relative group hover:scale-105 transition-transform duration-300"
       onClick={onClick}
     >
       <div className="relative w-[400px] h-[500px] rounded-3xl">
@@ -277,7 +276,7 @@ const Benefits = () => {
                   }}
                 >
                   <div
-                    className="relative h-full rounded-3xl overflow-hidden group cursor-pointer"
+                    className="relative h-full rounded-3xl overflow-hidden group"
                     onClick={() => setActiveSlide(index)}
                   >
                     {/* Image */}

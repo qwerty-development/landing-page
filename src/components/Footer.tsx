@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { Mail, ArrowUpRight, ChevronRight } from 'lucide-react';
+import React, { useState } from "react";
+import { ArrowUpRight, ChevronRight } from "lucide-react";
 
 const Footer = () => {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
-    element?.scrollIntoView({ behavior: 'smooth' });
+    element?.scrollIntoView({ behavior: "smooth" });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -15,54 +15,54 @@ const Footer = () => {
     setIsSubmitting(true);
     setTimeout(() => {
       setIsSubmitting(false);
-      setEmail('');
+      setEmail("");
     }, 2000);
   };
 
   const footerLinks = [
     {
-      title: 'Product',
+      title: "Product",
       links: [
-        { name: 'Features', action: () => scrollToSection('features') },
-        { name: 'How It Works', action: () => scrollToSection('process') },
-        { name: 'Pricing', href: '#' },
-        { name: 'For Restaurants', href: '#' }
-      ]
+        { name: "Features", action: () => scrollToSection("features") },
+        { name: "How It Works", action: () => scrollToSection("process") },
+        { name: "Pricing", href: "#" },
+        { name: "For Restaurants", href: "#" },
+      ],
     },
     {
-      title: 'Company',
+      title: "Company",
       links: [
-        { name: 'About', href: '#' },
-        { name: 'Careers', href: '#', badge: '3 open' },
-        { name: 'Press', href: '#' },
-        { name: 'Contact', href: '#' }
-      ]
+        { name: "About", href: "#" },
+        { name: "Careers", href: "#", badge: "3 open" },
+        { name: "Press", href: "#" },
+        { name: "Contact", href: "#" },
+      ],
     },
     {
-      title: 'Resources',
+      title: "Resources",
       links: [
-        { name: 'Blog', href: '#' },
-        { name: 'Newsletter', href: '#' },
-        { name: 'Help Center', href: '#' },
-        { name: 'Community', href: '#' }
-      ]
+        { name: "Blog", href: "#" },
+        { name: "Newsletter", href: "#" },
+        { name: "Help Center", href: "#" },
+        { name: "Community", href: "#" },
+      ],
     },
     {
-      title: 'Legal',
+      title: "Legal",
       links: [
-        { name: 'Privacy', href: '#' },
-        { name: 'Terms', href: '#' },
-        { name: 'Cookies', href: '#' },
-        { name: 'Licenses', href: '#' }
-      ]
-    }
+        { name: "Privacy", href: "#" },
+        { name: "Terms", href: "#" },
+        { name: "Cookies", href: "#" },
+        { name: "Licenses", href: "#" },
+      ],
+    },
   ];
 
   const socialLinks = [
-    { name: 'Instagram', href: '#' },
-    { name: 'Twitter', href: '#' },
-    { name: 'LinkedIn', href: '#' },
-    { name: 'Facebook', href: '#' }
+    { name: "Instagram", href: "#" },
+    { name: "Twitter", href: "#" },
+    { name: "LinkedIn", href: "#" },
+    { name: "Facebook", href: "#" },
   ];
 
   return (
@@ -73,15 +73,13 @@ const Footer = () => {
           {/* Brand Section */}
           <div>
             <div className="mb-8">
-              <span className="text-3xl font-thin tracking-wider">
-                PLATE
-              </span>
+              <span className="text-3xl font-thin tracking-wider">PLATE</span>
             </div>
             <p className="text-gray-400 text-lg leading-relaxed max-w-md mb-12">
-              Transform your dining experience with Lebanon's premier restaurant reservation platform. 
-              Discover, book, and enjoy.
+              Transform your dining experience with Lebanon's premier restaurant
+              reservation platform. Discover, book, and enjoy.
             </p>
-            
+
             {/* Social Links */}
             <div className="flex gap-6">
               {socialLinks.map((social) => (
@@ -101,7 +99,8 @@ const Footer = () => {
           <div className="lg:text-right">
             <h3 className="text-2xl font-light mb-4">Stay Updated</h3>
             <p className="text-gray-400 mb-8">
-              Get the latest updates on new features and restaurant partnerships.
+              Get the latest updates on new features and restaurant
+              partnerships.
             </p>
             <form onSubmit={handleSubmit} className="relative max-w-md ml-auto">
               <input
@@ -115,7 +114,7 @@ const Footer = () => {
               <button
                 type="submit"
                 className={`absolute right-2 top-1/2 -translate-y-1/2 w-12 h-12 bg-white text-black rounded-full flex items-center justify-center hover:scale-110 transition-all duration-300 ${
-                  isSubmitting ? 'scale-0' : 'scale-100'
+                  isSubmitting ? "scale-0" : "scale-100"
                 }`}
               >
                 <ChevronRight className="w-5 h-5" />
@@ -131,19 +130,18 @@ const Footer = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-20 pt-20 border-t border-white/10">
           {footerLinks.map((section) => (
             <div key={section.title}>
-              <h4 className="text-sm font-light tracking-wider text-gray-400 mb-6">{section.title.toUpperCase()}</h4>
+              <h4 className="text-sm font-light tracking-wider text-gray-400 mb-6">
+                {section.title.toUpperCase()}
+              </h4>
               <ul className="space-y-4">
                 {section.links.map((link) => (
                   <li key={link.name}>
-               
-                      <a
-                        href={link.href}
-                        className="group flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300"
-                      >
-                        {link.name}
-                        
-                      </a>
-                    
+                    <a
+                      href={link.href}
+                      className="group flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300"
+                    >
+                      {link.name}
+                    </a>
                   </li>
                 ))}
               </ul>
@@ -158,10 +156,10 @@ const Footer = () => {
             <span className="hidden md:block">·</span>
             <span>Crafted with love in Lebanon</span>
           </div>
-          
+
           {/* Back to top */}
           <button
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             className="group flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300"
           >
             <span className="text-sm">Back to top</span>

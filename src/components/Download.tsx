@@ -1,13 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import {
-  Smartphone,
-  Star,
-  Shield,
-  Zap,
-  Download,
-  ChevronRight,
-  Apple,
-} from "lucide-react";
+import { Star, Shield, Zap, Download } from "lucide-react";
 import tableShowcase from "/dist/assets/tableSearchPage.jpg"; // Ensure this path is correct
 
 const DownloadSection = () => {
@@ -130,7 +122,7 @@ const DownloadSection = () => {
               ].map((feature, index) => (
                 <div
                   key={index}
-                  className="flex items-start gap-6 group cursor-pointer"
+                  className="flex items-start gap-6 group"
                   style={{ animationDelay: `${600 + index * 100}ms` }}
                 >
                   <div className="w-14 h-14 bg-black rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-500">
