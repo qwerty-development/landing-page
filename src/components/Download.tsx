@@ -102,7 +102,7 @@ const DownloadSection = () => {
             </div>
 
             {/* Features */}
-            <div className="space-y-8 mb-16">
+            <div className="space-y-5 mb-16">
               {[
                 {
                   icon: Zap,
@@ -121,20 +121,30 @@ const DownloadSection = () => {
                 },
               ].map((feature, index) => (
                 <div
-                  key={index}
-                  className="flex items-start gap-6 group"
-                  style={{ animationDelay: `${600 + index * 100}ms` }}
-                >
-                  <div className="w-14 h-14 bg-black rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-500">
-                    <feature.icon className="w-7 h-7 text-white" />
-                  </div>
-                  <div>
-                    <h4 className="text-xl font-light mb-2 text-black">
-                      {feature.title}
-                    </h4>
-                    <p className="text-gray-600">{feature.desc}</p>
-                  </div>
-                </div>
+  key={index}
+  className="relative flex w-fit items-start rounded-xl transition-all duration-300 p-5 pt-0 pl-0 gap-6 group"
+  style={{ animationDelay: `${600 + index * 100}ms` }}
+>
+  {/* Blurry bottom-right border */}
+  <div
+    className="pointer-events-none absolute bottom-0 right-0 h-3/4 w-1/2 rounded-br-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+    style={{
+      boxShadow: '3px 3px 6px rgba(0,0,0,0.15)', // only bottom-right direction
+      borderBottomRightRadius: '0.75rem',
+    }}
+  />
+
+  <div className="w-14 h-14 bg-black rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-500">
+    <feature.icon className="w-7 h-7 text-white" />
+  </div>
+  <div>
+    <h4 className="text-xl font-light mb-2 text-black">
+      {feature.title}
+    </h4>
+    <p className="text-gray-600">{feature.desc}</p>
+  </div>
+</div>
+
               ))}
             </div>
 

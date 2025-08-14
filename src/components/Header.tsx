@@ -4,7 +4,6 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [hoveredItem, setHoveredItem] = useState<number | null>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const navRef = useRef<HTMLDivElement>(null);
 
@@ -113,22 +112,11 @@ const Header = () => {
 
             {/* Desktop Navigation with Magnetic Effect */}
             <nav className="hidden lg:flex items-center space-x-1">
-              {navItems.map((item, index) => (
+              {navItems.map((item) => (
                 <div key={item.name} className="relative">
                   <button
                     onClick={() => scrollToSection(item.id)}
-                    onMouseEnter={() => setHoveredItem(index)}
-                    onMouseLeave={() => setHoveredItem(null)}
                     className="relative px-6 py-3 text-gray-400 hover:text-white transition-all duration-500 text-sm tracking-widest group"
-                    style={{
-                      transform:
-                        hoveredItem === index
-                          ? `translate(${(mousePosition.x - 50) * 0.1}px, ${
-                              (mousePosition.y - 25) * 0.1
-                            }px)`
-                          : "",
-                      animationDelay: `${index * 50}ms`,
-                    }}
                   >
                     {/* Hover Background */}
                     <div
