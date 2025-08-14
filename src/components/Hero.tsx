@@ -277,7 +277,7 @@ const Hero = () => {
 
           {/* CTA Buttons with Liquid Effect */}
           <div
-            className="flex flex-row gap-4 sm:gap-8 justify-start sm:justify-center items-center animate-slide-up opacity-0"
+            className="flex flex-row gap-4 sm:gap-8 justify-start sm:justify-center items-center animate-slide-up opacity-0 lg:pb-8"
             style={{ animationDelay: "1000ms", animationFillMode: "forwards" }}
           >
             <button
