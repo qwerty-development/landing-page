@@ -14,6 +14,8 @@ const HowItWorks = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const sectionRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLDivElement>(null);
+  const touchStartX = useRef<number | null>(null);
+  const touchCurrentX = useRef<number | null>(null);
 
   const steps = [
     {
@@ -95,6 +97,28 @@ const HowItWorks = () => {
     }, 5000);
     return () => clearInterval(interval);
   }, []);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchCurrentX.current = touchStartX.current;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchCurrentX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStartX.current == null || touchCurrentX.current == null) return;
+    const delta = touchCurrentX.current - touchStartX.current;
+    const threshold = 50;
+    if (delta > threshold) {
+      setActiveStep((prev) => (prev - 1 + steps.length) % steps.length);
+    } else if (delta < -threshold) {
+      setActiveStep((prev) => (prev + 1) % steps.length);
+    }
+    touchStartX.current = null;
+    touchCurrentX.current = null;
+  };
 
   return (
     <section
@@ -220,7 +244,12 @@ const HowItWorks = () => {
           {/* Step Visual */}
           <div className="order-1 lg:order-2">
             <div className="relative">
-              <div className="w-full h-[700px] rounded-3xl overflow-hidden">
+              <div
+                className="w-full h-[700px] rounded-3xl overflow-hidden"
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+              >
                 {steps.map((step, index) => (
                   <div
                     key={index}

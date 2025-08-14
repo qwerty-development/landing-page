@@ -53,6 +53,8 @@ const Benefits = () => {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const touchStartX = useRef<number | null>(null);
+  const touchCurrentX = useRef<number | null>(null);
 
   const experiences = [
     {
@@ -254,7 +256,31 @@ const Benefits = () => {
             isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
           }`}
         >
-          <div className="relative h-[800px] perspective-1000">
+          <div
+            className="relative h-[800px] perspective-1000"
+            onTouchStart={(e) => {
+              touchStartX.current = e.touches[0].clientX;
+              touchCurrentX.current = touchStartX.current;
+            }}
+            onTouchMove={(e) => {
+              touchCurrentX.current = e.touches[0].clientX;
+            }}
+            onTouchEnd={() => {
+              if (touchStartX.current == null || touchCurrentX.current == null)
+                return;
+              const delta = touchCurrentX.current - touchStartX.current;
+              const threshold = 60;
+              if (delta > threshold) {
+                setActiveSlide(
+                  (prev) => (prev - 1 + experiences.length) % experiences.length
+                );
+              } else if (delta < -threshold) {
+                setActiveSlide((prev) => (prev + 1) % experiences.length);
+              }
+              touchStartX.current = null;
+              touchCurrentX.current = null;
+            }}
+          >
             {experiences.map((exp, index) => {
               const offset = index - activeSlide;
               const isActive = index === activeSlide;

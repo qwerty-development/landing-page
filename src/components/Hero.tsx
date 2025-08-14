@@ -8,6 +8,8 @@ const Hero = () => {
   const [textGlitch, setTextGlitch] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
+  const touchStartX = useRef<number | null>(null);
+  const touchCurrentX = useRef<number | null>(null);
 
   const backgroundImages = [
     "https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=1920&q=80",
@@ -174,7 +176,32 @@ const Hero = () => {
       />
 
       {/* Animated Background Layers */}
-      <div className="absolute inset-0">
+      <div
+        className="absolute inset-0"
+        onTouchStart={(e) => {
+          touchStartX.current = e.touches[0].clientX;
+          touchCurrentX.current = touchStartX.current;
+        }}
+        onTouchMove={(e) => {
+          touchCurrentX.current = e.touches[0].clientX;
+        }}
+        onTouchEnd={() => {
+          if (touchStartX.current == null || touchCurrentX.current == null)
+            return;
+          const delta = touchCurrentX.current - touchStartX.current;
+          const threshold = 40;
+          if (delta > threshold) {
+            setCurrentImage(
+              (prev) =>
+                (prev - 1 + backgroundImages.length) % backgroundImages.length
+            );
+          } else if (delta < -threshold) {
+            setCurrentImage((prev) => (prev + 1) % backgroundImages.length);
+          }
+          touchStartX.current = null;
+          touchCurrentX.current = null;
+        }}
+      >
         {/* Base Images */}
         {backgroundImages.map((img, index) => (
           <div

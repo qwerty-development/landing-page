@@ -68,8 +68,7 @@ function App() {
           innerRef.current.style.boxShadow = "none";
         } else {
           innerRef.current.style.backgroundColor = "#ffffff";
-          innerRef.current.style.boxShadow =
-            "none";
+          innerRef.current.style.boxShadow = "none";
         }
 
         // Breathing effect when idle

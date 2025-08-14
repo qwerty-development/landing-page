@@ -22,6 +22,8 @@ const Features = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const sectionRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
+  const touchStartX = useRef<number | null>(null);
+  const touchCurrentX = useRef<number | null>(null);
 
   const mainFeatures = [
     {
@@ -127,7 +129,7 @@ const Features = () => {
       Array.from({ length: 20 }).map(() => ({
         left: Math.random() * 100,
         delay: Math.random() * 5,
-        duration: 5 + Math.random() * 10
+        duration: 5 + Math.random() * 10,
       }))
     )
   );
@@ -285,6 +287,32 @@ const Features = () => {
             <div
               className="relative h-[700px] overflow-hidden rounded-3xl"
               ref={cardsRef}
+              onTouchStart={(e) => {
+                touchStartX.current = e.touches[0].clientX;
+                touchCurrentX.current = touchStartX.current;
+              }}
+              onTouchMove={(e) => {
+                touchCurrentX.current = e.touches[0].clientX;
+              }}
+              onTouchEnd={() => {
+                if (
+                  touchStartX.current == null ||
+                  touchCurrentX.current == null
+                )
+                  return;
+                const delta = touchCurrentX.current - touchStartX.current;
+                const threshold = 40;
+                if (delta > threshold) {
+                  setActiveFeature(
+                    (prev) =>
+                      (prev - 1 + mainFeatures.length) % mainFeatures.length
+                  );
+                } else if (delta < -threshold) {
+                  setActiveFeature((prev) => (prev + 1) % mainFeatures.length);
+                }
+                touchStartX.current = null;
+                touchCurrentX.current = null;
+              }}
             >
               {mainFeatures.map((feature, index) => (
                 <div
@@ -331,7 +359,9 @@ const Features = () => {
                           key={i}
                           onClick={() => setActiveFeature(i)}
                           className={`h-1 rounded-full transition-all duration-700 focus:outline-none ${
-                            i === activeFeature ? "w-12 bg-white" : "w-3 bg-white/30 hover:bg-white/50"
+                            i === activeFeature
+                              ? "w-12 bg-white"
+                              : "w-3 bg-white/30 hover:bg-white/50"
                           }`}
                           aria-label={`Go to feature ${i + 1}`}
                         />

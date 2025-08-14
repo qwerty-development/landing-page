@@ -11,6 +11,8 @@ const Testimonials = () => {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const touchStartX = useRef<number | null>(null);
+  const touchCurrentX = useRef<number | null>(null);
   const [hoveredReview, setHoveredReview] = useState<number | null>(null);
 
   const testimonials = [
@@ -94,6 +96,29 @@ const Testimonials = () => {
     );
   };
 
+  // Touch handlers for mobile swipe
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchCurrentX.current = touchStartX.current;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchCurrentX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStartX.current == null || touchCurrentX.current == null) return;
+    const delta = touchCurrentX.current - touchStartX.current;
+    const threshold = 50; // px
+    if (delta > threshold) {
+      prevTestimonial();
+    } else if (delta < -threshold) {
+      nextTestimonial();
+    }
+    touchStartX.current = null;
+    touchCurrentX.current = null;
+  };
+
   return (
     <section
       id="reviews"
@@ -132,7 +157,12 @@ const Testimonials = () => {
             <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-12 md:p-20 overflow-hidden">
               <Quote className="w-16 h-16 text-white/10 mb-12" />
 
-              <div className="relative min-h-[300px]">
+              <div
+                className="relative min-h-[300px]"
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+              >
                 {testimonials.map((testimonial, index) => (
                   <div
                     key={index}
