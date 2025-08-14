@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import Features from "./components/Features";
@@ -160,13 +160,13 @@ function App() {
       {/* Cursor trail */}
       <div
         ref={trailRef}
-        className="fixed w-10 h-10 pointer-events-none z-[90] bg-white/5 rounded-full blur-xl"
+        className="cursor-trail custom-cursor fixed w-10 h-10 pointer-events-none z-[90] bg-white/5 rounded-full blur-xl"
       />
 
       {/* Custom Cursor */}
       <div
         ref={cursorRef}
-        className="fixed w-6 h-6 pointer-events-none z-[100] mix-blend-difference"
+        className="custom-cursor fixed w-6 h-6 pointer-events-none z-[100] mix-blend-difference"
       >
         <div
           ref={innerRef}

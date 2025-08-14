@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Play, Sparkles } from "lucide-react";
+import { ChevronDown, Play, Sparkles } from "lucide-react";
 
 const Hero = () => {
   const [currentImage, setCurrentImage] = useState(0);
@@ -221,7 +221,7 @@ const Hero = () => {
         <div className="max-w-6xl mx-auto">
           {/* Animated Tag */}
           <div className="flex justify-center sm:justify-center mb-6 sm:mb-10">
-            <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-8 py-3 sm:py-4 mt-0 sm:mt-20 rounded-full border border-white/10 bg-white/5 backdrop-blur-2xl animate-slide-down hover:bg-white/10 transition-all duration-500  group relative overflow-hidden">
+            <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-8 py-3 sm:py-4 mt-0 sm:mt-20 rounded-full border border-white/10 bg-white/5 backdrop-blur-2xl animate-slide-down hover:bg-white/10 transition-all duration-500 cursor-pointer group relative overflow-hidden">
               {/* Mobile glow effect */}
               <div className="absolute inset-0 bg-gradient-to-r from-white/10 via-transparent to-white/10 opacity-0 sm:group-hover:opacity-100 transition-opacity duration-700"></div>
               <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 animate-spin-slow relative z-50" />
@@ -277,7 +277,7 @@ const Hero = () => {
 
           {/* CTA Buttons with Liquid Effect */}
           <div
-            className="flex flex-row gap-4 sm:gap-8 justify-start sm:justify-center items-center animate-slide-up opacity-0 lg:pb-8"
+            className="flex flex-row gap-4 sm:gap-8 justify-start sm:justify-center items-center animate-slide-up opacity-0"
             style={{ animationDelay: "1000ms", animationFillMode: "forwards" }}
           >
             <button

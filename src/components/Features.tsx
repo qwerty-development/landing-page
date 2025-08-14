@@ -7,9 +7,11 @@ import {
   MapPin,
   Gift,
   MessageCircle,
+  Shield,
   ChevronRight,
   Calendar,
   Bell,
+  Zap,
   Hexagon,
 } from "lucide-react";
 
@@ -24,7 +26,7 @@ const Features = () => {
   const mainFeatures = [
     {
       icon: Sparkles,
-      title: "Tailored To You",
+      title: "Your Preferences",
       description:
         "Our intelligent algorithm learns your preferences to suggest the perfect dining experience every time.",
       image:
@@ -125,7 +127,7 @@ const Features = () => {
       Array.from({ length: 20 }).map(() => ({
         left: Math.random() * 100,
         delay: Math.random() * 5,
-        duration: 5 + Math.random() * 10,
+        duration: 5 + Math.random() * 10
       }))
     )
   );
@@ -215,7 +217,7 @@ const Features = () => {
               {mainFeatures.map((feature, index) => (
                 <div
                   key={index}
-                  className={`group p-8 rounded-3xl transition-all duration-700 border relative overflow-hidden ${
+                  className={`group cursor-pointer p-8 rounded-3xl transition-all duration-700 border relative overflow-hidden ${
                     activeFeature === index
                       ? "bg-white/5 border-white/20 backdrop-blur-xl transform scale-105"
                       : "border-white/10 hover:border-white/20 hover:bg-white/5"
@@ -329,9 +331,7 @@ const Features = () => {
                           key={i}
                           onClick={() => setActiveFeature(i)}
                           className={`h-1 rounded-full transition-all duration-700 focus:outline-none ${
-                            i === activeFeature
-                              ? "w-12 bg-white"
-                              : "w-3 bg-white/30 hover:bg-white/50"
+                            i === activeFeature ? "w-12 bg-white" : "w-3 bg-white/30 hover:bg-white/50"
                           }`}
                           aria-label={`Go to feature ${i + 1}`}
                         />
@@ -386,7 +386,7 @@ const Features = () => {
         {/* Large Feature Cards with Advanced Hover Effects */}
         <div className="grid md:grid-cols-2 gap-8">
           <div
-            className={`relative overflow-hidden rounded-3xl bg-gradient-to-br from-gray-900 to-gray-800 p-12 text-white group transition-all duration-1000 ${
+            className={`relative overflow-hidden rounded-3xl bg-gradient-to-br from-gray-900 to-gray-800 p-12 text-white group cursor-pointer transition-all duration-1000 ${
               isVisible
                 ? "opacity-100 translate-x-0"
                 : "opacity-0 -translate-x-10"
@@ -413,14 +413,14 @@ const Features = () => {
           </div>
 
           <div
-            className={`relative overflow-hidden rounded-3xl bg-gradient-to-br from-gray-800 to-gray-900 p-12 text-white group transition-all duration-1000 ${
+            className={`relative overflow-hidden rounded-3xl bg-gradient-to-br from-gray-800 to-gray-900 p-12 text-white group cursor-pointer transition-all duration-1000 ${
               isVisible
                 ? "opacity-100 translate-x-0"
                 : "opacity-0 translate-x-10"
             }`}
           >
             <div className="relative z-10">
-              <Calendar className="w-12 h-12 mb-6 text-white/80" />
+              <Calendar className="w-12 h-12 mb-6 text-white/80 group-hover:animate-bounce" />
               <h3 className="text-4xl font-thin mb-4 tracking-wide">
                 Plan Ahead
               </h3>

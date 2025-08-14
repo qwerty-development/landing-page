@@ -162,7 +162,7 @@ const HowItWorks = () => {
               {steps.map((step, index) => (
                 <div
                   key={index}
-                  className={`group p-8 rounded-3xl transition-all duration-700 border relative overflow-hidden ${
+                  className={`group cursor-pointer p-8 rounded-3xl transition-all duration-700 border relative overflow-hidden ${
                     activeStep === index
                       ? "bg-white/5 border-white/20 backdrop-blur-xl"
                       : "border-white/10 hover:border-white/20 hover:bg-white/5"
@@ -274,7 +274,7 @@ const HowItWorks = () => {
         <div
           id="film-section"
           ref={videoRef}
-          className={`relative rounded-3xl overflow-hidden bg-black h-[600px] group transition-all duration-1000 delay-600 ${
+          className={`relative rounded-3xl overflow-hidden bg-black h-[600px] group cursor-pointer transition-all duration-1000 delay-600 ${
             isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
           }`}
         >

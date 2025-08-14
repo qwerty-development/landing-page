@@ -3,12 +3,38 @@
 @tailwind utilities;
 
 /* Global Styles */
-* {
-  cursor: none;
+/* Only hide the native cursor on devices that support hover/pointer precision (desktop).
+   On touch devices we restore the default cursor and hide the custom cursor elements. */
+@media (hover: hover) and (pointer: fine) {
+  * {
+    cursor: none;
+  }
+
+  a, button {
+    cursor: none;
+  }
+
+  /* Show custom cursor elements on capable devices */
+  .custom-cursor,
+  .cursor-trail {
+    display: block;
+  }
 }
 
-a, button {
-  cursor: none;
+@media (hover: none), (pointer: coarse) {
+  /* Touch / mobile devices: keep native cursor and hide custom cursor visuals */
+  * {
+    cursor: auto;
+  }
+
+  a, button {
+    cursor: auto;
+  }
+
+  .custom-cursor,
+  .cursor-trail {
+    display: none !important;
+  }
 }
 
 /* Custom scrollbar styles */
