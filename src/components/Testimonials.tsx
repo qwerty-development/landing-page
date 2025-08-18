@@ -173,14 +173,14 @@ const Testimonials = () => {
                         ? "opacity-0 -translate-x-full scale-95"
                         : "opacity-0 translate-x-full scale-95"
                     }`}
-                    style={{ minHeight: '100%' }}
+                    style={{ minHeight: "100%" }}
                   >
                     {/* Quote at top */}
                     <p className="text-center text-base xs:text-lg sm:text-2xl md:text-3xl lg:text-4xl font-thin text-white leading-relaxed max-w-3xl mx-auto">
                       "{testimonial.text}"
                     </p>
                     {/* Stars review centered above profile/info */}
-                    <div className="flex justify-center mt-2 mb-1">
+                    <div className="flex justify-center mt-2 mb-1 md:hidden">
                       {[...Array(testimonial.rating)].map((_, i) => (
                         <Star
                           key={i}
@@ -188,30 +188,40 @@ const Testimonials = () => {
                         />
                       ))}
                     </div>
-                    {/* Bottom: profile left, info right, compact layout */}
-                    <div className="flex items-end w-full px-2 pb-2 gap-3">
-                      {/* Profile image bottom left */}
-                      <div className="relative">
-                        <div className="w-12 h-12 xs:w-16 xs:h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden">
-                          <img
-                            src={testimonial.image}
-                            alt={testimonial.name}
-                            className="w-full h-full object-cover"
-                          />
+                    {/* Bottom: profile (image + name) left, stars right; role & location under name */}
+                    <div className="flex justify-between items-center w-full px-2 pb-2 gap-3">
+                      {/* Left group: image + text */}
+                      <div className="flex items-center gap-3">
+                        <div className="relative flex-shrink-0">
+                          <div className="w-12 h-12 xs:w-16 xs:h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden">
+                            <img
+                              src={testimonial.image}
+                              alt={testimonial.name}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                          <div className="absolute inset-0 rounded-full border-2 border-white/20"></div>
                         </div>
-                        <div className="absolute inset-0 rounded-full border-2 border-white/20"></div>
+                        <div className="min-w-0">
+                          <h4 className="text-base xs:text-lg sm:text-xl font-light text-white truncate">
+                            {testimonial.name}
+                          </h4>
+                          <p className="text-xs xs:text-sm text-gray-400 truncate">
+                            {testimonial.role}
+                          </p>
+                          <p className="text-xs xs:text-sm text-gray-500 truncate">
+                            {testimonial.location}
+                          </p>
+                        </div>
                       </div>
-                      {/* Info stacked to right of image */}
-                      <div className="flex flex-col items-start justify-end">
-                        <h4 className="text-base xs:text-lg sm:text-xl font-light text-white leading-tight">
-                          {testimonial.name}
-                        </h4>
-                        <p className="text-xs xs:text-sm sm:text-gray-400 text-gray-400 leading-tight">
-                          {testimonial.role}
-                        </p>
-                        <p className="text-xs xs:text-sm sm:text-sm text-gray-500 leading-tight">
-                          {testimonial.location}
-                        </p>
+                      {/* Stars on the right (desktop) */}
+                      <div className="hidden md:flex items-center">
+                        {[...Array(testimonial.rating)].map((_, i) => (
+                          <Star
+                            key={i}
+                            className="w-5 h-5 fill-white text-white ml-1"
+                          />
+                        ))}
                       </div>
                     </div>
                   </div>
