@@ -151,14 +151,14 @@ const Testimonials = () => {
         <div
           className={`relative max-w-5xl mx-auto mb-32 transition-all duration-1000 delay-300 ${
             isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
-          }`}
+          } py-10 xs:py-14 sm:py-0`}
         >
           <div className="relative overflow-visible">
             <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-12 md:p-20 overflow-hidden">
               <Quote className="w-16 h-16 text-white/10 mb-12" />
 
               <div
-                className="relative min-h-[300px]"
+                className="relative min-h-[300px] xs:min-h-[480px] sm:min-h-[300px]"
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
@@ -166,48 +166,52 @@ const Testimonials = () => {
                 {testimonials.map((testimonial, index) => (
                   <div
                     key={index}
-                    className={`absolute inset-0 transition-all duration-1000 ${
+                    className={`absolute inset-0 flex flex-col justify-between transition-all duration-1000 ${
                       index === activeTestimonial
                         ? "opacity-100 translate-x-0 scale-100"
                         : index < activeTestimonial
                         ? "opacity-0 -translate-x-full scale-95"
                         : "opacity-0 translate-x-full scale-95"
                     }`}
+                    style={{ minHeight: '100%' }}
                   >
-                    <p className="text-2xl md:text-3xl lg:text-4xl font-thin text-white mb-16 leading-relaxed">
+                    {/* Quote at top */}
+                    <p className="text-center text-base xs:text-lg sm:text-2xl md:text-3xl lg:text-4xl font-thin text-white leading-relaxed max-w-3xl mx-auto">
                       "{testimonial.text}"
                     </p>
-
-                    <div className="flex items-center justify-between flex-wrap gap-6">
-                      <div className="flex items-center gap-6">
-                        <div className="relative">
-                          <div className="w-20 h-20 rounded-full overflow-hidden">
-                            <img
-                              src={testimonial.image}
-                              alt={testimonial.name}
-                              className="w-full h-full object-cover"
-                            />
-                          </div>
-                          <div className="absolute inset-0 rounded-full border-2 border-white/20"></div>
-                        </div>
-                        <div>
-                          <h4 className="text-xl font-light text-white">
-                            {testimonial.name}
-                          </h4>
-                          <p className="text-gray-400">{testimonial.role}</p>
-                          <p className="text-sm text-gray-500 mt-1">
-                            {testimonial.location}
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="flex gap-1">
-                        {[...Array(testimonial.rating)].map((_, i) => (
-                          <Star
-                            key={i}
-                            className="w-5 h-5 fill-white text-white"
+                    {/* Stars review centered above profile/info */}
+                    <div className="flex justify-center mt-2 mb-1">
+                      {[...Array(testimonial.rating)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className="w-4 h-4 fill-white text-white mx-0.5"
+                        />
+                      ))}
+                    </div>
+                    {/* Bottom: profile left, info right, compact layout */}
+                    <div className="flex items-end w-full px-2 pb-2 gap-3">
+                      {/* Profile image bottom left */}
+                      <div className="relative">
+                        <div className="w-12 h-12 xs:w-16 xs:h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden">
+                          <img
+                            src={testimonial.image}
+                            alt={testimonial.name}
+                            className="w-full h-full object-cover"
                           />
-                        ))}
+                        </div>
+                        <div className="absolute inset-0 rounded-full border-2 border-white/20"></div>
+                      </div>
+                      {/* Info stacked to right of image */}
+                      <div className="flex flex-col items-start justify-end">
+                        <h4 className="text-base xs:text-lg sm:text-xl font-light text-white leading-tight">
+                          {testimonial.name}
+                        </h4>
+                        <p className="text-xs xs:text-sm sm:text-gray-400 text-gray-400 leading-tight">
+                          {testimonial.role}
+                        </p>
+                        <p className="text-xs xs:text-sm sm:text-sm text-gray-500 leading-tight">
+                          {testimonial.location}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -215,7 +219,7 @@ const Testimonials = () => {
               </div>
             </div>
             {/* Navigation */}
-            <div className="absolute top-1/2 -translate-y-1/2 -left-6 -right-6 flex justify-between pointer-events-none">
+            <div className="hidden md:flex absolute top-1/2 -translate-y-1/2 -left-6 -right-6 justify-between pointer-events-none">
               <button
                 onClick={prevTestimonial}
                 className="pointer-events-auto w-14 h-14 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300 group"
