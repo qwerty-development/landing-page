@@ -196,7 +196,6 @@ function App() {
         <HowItWorks />
         <Testimonials />
         <Download />
-        <TitleCard index={4} title="Title" subtitle="Subtitle" tags="Tag1, Tag2" />
       </main>
       <Footer />
     </div>

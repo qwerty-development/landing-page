@@ -1,17 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
-import {
-  Smartphone,
-  Search,
-  Calendar,
-  CheckCircle,
-  ArrowRight,
-  Play,
-} from "lucide-react";
+import { Smartphone, Search, Calendar, CheckCircle, Play } from "lucide-react";
+import TitleCard from "./TitleCard";
 
 const HowItWorks = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const sectionRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef<number | null>(null);
@@ -77,19 +70,7 @@ const HowItWorks = () => {
     return () => observer.disconnect();
   }, []);
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (videoRef.current) {
-        const rect = videoRef.current.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width - 0.5) * 20;
-        const y = ((e.clientY - rect.top) / rect.height - 0.5) * 20;
-        setMousePosition({ x, y });
-      }
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+  // mouse-based parallax removed (unused). Re-add if needed later.
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -184,58 +165,15 @@ const HowItWorks = () => {
           <div className="order-2 lg:order-1">
             <div className="space-y-4">
               {steps.map((step, index) => (
-                <div
+                <TitleCard
                   key={index}
-                  className={`group p-8 rounded-3xl transition-all duration-700 border relative overflow-hidden ${
-                    activeStep === index
-                      ? "bg-white/5 border-white/20 backdrop-blur-xl"
-                      : "border-white/10 hover:border-white/20 hover:bg-white/5"
-                  }`}
+                  number={step.number}
+                  title={step.title}
+                  description={step.description}
+                  features={step.features}
+                  active={activeStep === index}
                   onClick={() => setActiveStep(index)}
-                >
-                  <div className="flex items-center gap-6">
-                    <div className="flex-shrink-0">
-                      <div
-                        className={`text-4xl font-thin transition-all duration-700 ${
-                          activeStep === index ? "text-white" : "text-gray-600"
-                        }`}
-                      >
-                        {step.number}
-                      </div>
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-2xl font-light text-white mb-2">
-                        {step.title}
-                      </h3>
-                      <p className="text-gray-400">{step.description}</p>
-                      {activeStep === index && (
-                        <div className="flex flex-wrap gap-3 mt-4 animate-fade-in">
-                          {step.features.map((feature, fIndex) => (
-                            <span
-                              key={fIndex}
-                              className="text-sm px-4 py-2 bg-white/10 rounded-full text-gray-300"
-                            >
-                              {feature}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                    <ArrowRight
-                      className={`w-5 h-5 text-white transition-all duration-500 ${
-                        activeStep === index
-                          ? "opacity-100 translate-x-0"
-                          : "opacity-0 -translate-x-4"
-                      }`}
-                    />
-                  </div>
-                  {/* Progress Indicator */}
-                  {activeStep === index && (
-                    <div className="absolute bottom-0 left-0 h-px bg-white/20 w-full">
-                      <div className="h-full bg-white animate-progress"></div>
-                    </div>
-                  )}
-                </div>
+                />
               ))}
             </div>
           </div>
