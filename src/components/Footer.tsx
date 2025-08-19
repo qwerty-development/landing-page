@@ -96,32 +96,39 @@ const Footer = () => {
           </div>
 
           {/* Newsletter Section */}
-          <div className="lg:text-right">
+          <div className="lg:text-right min-w-0">
             <h3 className="text-2xl font-light mb-4">Stay Updated</h3>
             <p className="text-gray-400 mb-8">
               Get the latest updates on new features and restaurant
               partnerships.
             </p>
-            <form onSubmit={handleSubmit} className="relative max-w-md ml-auto">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
-                className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-full text-white placeholder-gray-500 focus:outline-none focus:border-white/30 transition-colors duration-300"
-                required
-              />
-              <button
-                type="submit"
-                className={`absolute right-2 top-1/2 -translate-y-1/2 w-12 h-12 bg-white text-black rounded-full flex items-center justify-center hover:scale-110 transition-all duration-300 ${
-                  isSubmitting ? "scale-0" : "scale-100"
-                }`}
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-              {isSubmitting && (
-                <div className="absolute right-2 top-1 -translate-y-1/2 w-12 h-12 rounded-full border-2 border-white/30 border-t-white animate-spin"></div>
-              )}
+            <form
+              onSubmit={handleSubmit}
+              className="max-w-lg mx-auto w-full min-w-0"
+            >
+              <div className="relative w-fit min-w-0 md:w-full">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  className="w-full max-w-full px-6 pr-16 py-4 bg-white/5 border border-white/10 rounded-full text-white placeholder-gray-500 focus:outline-none focus:border-white/30 transition-colors duration-300 box-border"
+                  required
+                />
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  aria-busy={isSubmitting}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 w-12 h-12 bg-white text-black rounded-full flex items-center justify-center hover:scale-105 transition-all duration-200"
+                >
+                  {isSubmitting ? (
+                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  ) : (
+                    <ChevronRight className="w-5 h-5" />
+                  )}
+                </button>
+              </div>
             </form>
           </div>
         </div>
