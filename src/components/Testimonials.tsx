@@ -156,9 +156,8 @@ const Testimonials = () => {
           <div className="relative overflow-visible">
             <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-12 md:p-20 overflow-hidden">
               <Quote className="w-16 h-16 text-white/10 mb-12" />
-
               <div
-                className="relative min-h-[300px] xs:min-h-[480px] sm:min-h-[300px]"
+                className="relative min-h-[260px] xs:min-h-[480px] sm:min-h-[300px] md:min-h-[340px]"
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
@@ -179,15 +178,6 @@ const Testimonials = () => {
                     <p className="text-center text-base xs:text-lg sm:text-2xl md:text-3xl lg:text-4xl font-thin text-white leading-relaxed max-w-3xl mx-auto">
                       "{testimonial.text}"
                     </p>
-                    {/* Stars review centered above profile/info */}
-                    <div className="flex justify-center mt-2 mb-1 md:hidden">
-                      {[...Array(testimonial.rating)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className="w-4 h-4 fill-white text-white mx-0.5"
-                        />
-                      ))}
-                    </div>
                     {/* Bottom: profile (image + name) left, stars right; role & location under name */}
                     <div className="flex justify-between items-center w-full px-2 pb-2 gap-3">
                       {/* Left group: image + text */}
@@ -213,15 +203,6 @@ const Testimonials = () => {
                             {testimonial.location}
                           </p>
                         </div>
-                      </div>
-                      {/* Stars on the right (desktop) */}
-                      <div className="hidden md:flex items-center">
-                        {[...Array(testimonial.rating)].map((_, i) => (
-                          <Star
-                            key={i}
-                            className="w-5 h-5 fill-white text-white ml-1"
-                          />
-                        ))}
                       </div>
                     </div>
                   </div>

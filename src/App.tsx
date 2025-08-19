@@ -7,6 +7,7 @@ import HowItWorks from "./components/HowItWorks";
 import Testimonials from "./components/Testimonials";
 import Download from "./components/Download";
 import Footer from "./components/Footer";
+import TitleCard from "./components/TitleCard";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -195,6 +196,7 @@ function App() {
         <HowItWorks />
         <Testimonials />
         <Download />
+        <TitleCard index={4} title="Title" subtitle="Subtitle" tags="Tag1, Tag2" />
       </main>
       <Footer />
     </div>

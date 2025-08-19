@@ -450,7 +450,7 @@ const Features = () => {
             }`}
           >
             <div className="relative z-10">
-              <Calendar className="w-12 h-12 mb-6 text-white/80 group-hover:animate-bounce" />
+              <Calendar className="w-12 h-12 mb-6 text-white/80" />
               <h3 className="text-4xl font-thin mb-4 tracking-wide">
                 Plan Ahead
               </h3>
