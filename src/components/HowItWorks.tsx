@@ -94,7 +94,7 @@ const HowItWorks = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveStep((prev) => (prev + 1) % steps.length);
-    }, 5000);
+    }, 4000);
     return () => clearInterval(interval);
   }, []);
 
@@ -367,22 +367,7 @@ const HowItWorks = () => {
           animation: fade-in 0.5s ease-out;
         }
 
-        /* Progress bar that fills to match the 5s auto-advance timer */
-        @keyframes progress {
-          from {
-            width: 0%;
-          }
-          to {
-            width: 100%;
-          }
-        }
-
-        .animate-progress {
-          width: 0%;
-          height: 100%;
-          animation: progress 5s linear forwards;
-          background-clip: content-box;
-        }
+  /* Using shared .animate-progress (defined in Features.tsx). */
       `}</style>
     </section>
   );
