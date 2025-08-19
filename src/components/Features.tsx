@@ -219,7 +219,7 @@ const Features = () => {
               {mainFeatures.map((feature, index) => (
                 <div
                   key={index}
-                  className={`group cursor-pointer p-8 rounded-3xl transition-all duration-700 border relative overflow-hidden ${
+                  className={`group p-8 rounded-3xl transition-all duration-700 border relative overflow-hidden ${
                     activeFeature === index
                       ? "bg-white/5 border-white/20 backdrop-blur-xl transform scale-105"
                       : "border-white/10 hover:border-white/20 hover:bg-white/5"

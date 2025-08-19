@@ -186,20 +186,13 @@ const HowItWorks = () => {
               {steps.map((step, index) => (
                 <div
                   key={index}
-                  className={`group cursor-pointer p-8 rounded-3xl transition-all duration-700 border relative overflow-hidden ${
+                  className={`group p-8 rounded-3xl transition-all duration-700 border relative overflow-hidden ${
                     activeStep === index
                       ? "bg-white/5 border-white/20 backdrop-blur-xl"
                       : "border-white/10 hover:border-white/20 hover:bg-white/5"
                   }`}
                   onClick={() => setActiveStep(index)}
                 >
-                  {/* Progress Bar */}
-                  <div
-                    className={`absolute bottom-0 left-0 h-[2px] bg-white transition-all duration-5000 ${
-                      activeStep === index ? "w-full" : "w-0"
-                    }`}
-                  />
-
                   <div className="flex items-center gap-6">
                     <div className="flex-shrink-0">
                       <div
@@ -236,6 +229,12 @@ const HowItWorks = () => {
                       }`}
                     />
                   </div>
+                  {/* Progress Indicator */}
+                  {activeStep === index && (
+                    <div className="absolute bottom-0 left-0 h-px bg-white/20 w-full">
+                      <div className="h-full bg-white animate-progress"></div>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -366,6 +365,23 @@ const HowItWorks = () => {
 
         .animate-fade-in {
           animation: fade-in 0.5s ease-out;
+        }
+
+        /* Progress bar that fills to match the 5s auto-advance timer */
+        @keyframes progress {
+          from {
+            width: 0%;
+          }
+          to {
+            width: 100%;
+          }
+        }
+
+        .animate-progress {
+          width: 0%;
+          height: 100%;
+          animation: progress 5s linear forwards;
+          background-clip: content-box;
         }
       `}</style>
     </section>
